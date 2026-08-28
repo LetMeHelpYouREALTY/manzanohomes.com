@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-manzano-dark: #0a2540;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+realscout-office-listings,
+realscout-advanced-search,
+realscout-home-value {
+  display: block;
+  width: 100%;
+  --rs-listing-divider-color: rgb(101, 141, 172);
+}

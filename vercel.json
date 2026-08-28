@@ -1,119 +1,36 @@
 {
-  "version": 2,
-  "framework": "sveltekit",
-  "buildCommand": "npm run build",
-  "outputDirectory": "build",
-  "installCommand": "pnpm install --frozen-lockfile",
+  "framework": "nextjs",
+  "regions": ["iad1"],
   "headers": [
-    {
-      "source": "/_app/immutable/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        }
-      ]
-    },
-    {
-      "source": "/sitemap.xml",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/xml; charset=utf-8"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/sitemap-properties.xml",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/xml; charset=utf-8"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/sitemap-index.xml",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/xml; charset=utf-8"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/robots.txt",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/plain"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400"
-        }
-      ]
-    },
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/sitemap_index.xml",
-      "destination": "/sitemap-index.xml"
-    }
-  ],
   "redirects": [
+    { "source": "/home", "destination": "/", "permanent": true },
     {
-      "source": "/home",
-      "destination": "/",
+      "source": "/homes-near/manzano-elementary",
+      "destination": "/homes-near-manzano-elementary",
       "permanent": true
     },
     {
-      "source": "/index.html",
-      "destination": "/",
+      "source": "/homes-near/green-valley-high-school",
+      "destination": "/homes-near-green-valley-high-school",
+      "permanent": true
+    },
+    {
+      "source": "/homes-near/coronado-high-school",
+      "destination": "/homes-near-coronado-high-school",
+      "permanent": true
+    },
+    {
+      "source": "/homes-near/southeast-career-technical-academy",
+      "destination": "/homes-near-southeast-career-technical-academy",
       "permanent": true
     }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false
+  ]
 }

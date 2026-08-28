@@ -1,0 +1,124 @@
+import Link from "next/link";
+import ContactForm from "@/components/forms/ContactForm";
+import RealScoutListings from "@/components/realscout/RealScoutListings";
+import JsonLd from "@/components/seo/JsonLd";
+import PageHero from "@/components/sections/PageHero";
+import {
+  breadcrumbSchema,
+  faqSchema,
+  localBusinessSchema,
+  webPageSchema,
+} from "@/lib/schema";
+import { SITE } from "@/lib/site";
+
+export type MarketingContent = {
+  path: string;
+  title: string;
+  description: string;
+  h1: string;
+  subtitle: string;
+  imageAlt: string;
+  paragraphs: string[];
+  stats?: Array<{ value: string; label: string }>;
+  faqs: Array<{ question: string; answer: string }>;
+  showListings?: boolean;
+  showForm?: boolean;
+};
+
+export default function MarketingPage({ content }: { content: MarketingContent }) {
+  const schemas = [
+    localBusinessSchema(),
+    webPageSchema({
+      name: content.h1,
+      description: content.description,
+      path: content.path,
+    }),
+    breadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: content.h1, url: content.path },
+    ]),
+    faqSchema(content.faqs),
+  ];
+
+  return (
+    <>
+      <JsonLd data={schemas} />
+      <PageHero title={content.h1} subtitle={content.subtitle} imageAlt={content.imageAlt} />
+
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          {content.paragraphs.map((paragraph) => (
+            <p key={paragraph.slice(0, 40)} className="mb-4 text-lg text-slate-700">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      {content.stats?.length ? (
+        <section className="bg-slate-900 py-12 text-white">
+          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-4 md:grid-cols-4">
+            {content.stats.map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-2xl font-bold text-primary-300">{stat.value}</div>
+                <div className="text-sm text-slate-300">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {content.showListings ? (
+        <section className="bg-slate-50 py-16">
+          <div className="mx-auto max-w-6xl px-4">
+            <h2 className="mb-6 text-center text-3xl font-bold text-slate-900">
+              Live listings near Manzano
+            </h2>
+            <RealScoutListings />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-3xl px-4">
+          <h2 className="mb-8 text-center text-3xl font-bold text-slate-900">
+            Frequently asked questions
+          </h2>
+          <dl className="space-y-6">
+            {content.faqs.map((faq) => (
+              <div key={faq.question}>
+                <dt className="font-semibold text-slate-900">{faq.question}</dt>
+                <dd className="mt-2 text-slate-700">{faq.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {content.showForm ? (
+        <section className="bg-slate-50 py-16">
+          <div className="mx-auto max-w-xl px-4">
+            <h2 className="mb-6 text-center text-3xl font-bold text-slate-900">
+              Talk with {SITE.agent}
+            </h2>
+            <ContactForm />
+          </div>
+        </section>
+      ) : (
+        <section className="bg-primary-700 py-16 text-center text-white">
+          <h2 className="text-3xl font-bold">Tour Manzano Peak this week</h2>
+          <p className="mt-3">
+            {SITE.address.street}, {SITE.address.city}, {SITE.address.region}{" "}
+            {SITE.address.postalCode}
+          </p>
+          <Link
+            href="/contact"
+            className="mt-6 inline-block rounded-lg bg-white px-6 py-3 font-semibold text-primary-800"
+          >
+            Request a tour
+          </Link>
+        </section>
+      )}
+    </>
+  );
+}
