@@ -7,11 +7,9 @@ export function pageMetadata(input: {
   path: string;
 }): Metadata {
   const url = canonicalUrl(input.path);
-  const fullTitle = /\| Manzano Homes$/i.test(input.title)
+  const fullTitle = /manzano homes/i.test(input.title)
     ? input.title
-    : input.title.startsWith("Manzano Homes")
-      ? input.title
-      : `${input.title} | Manzano Homes`;
+    : `${input.title} | Manzano Homes`;
   return {
     title: { absolute: fullTitle },
     description: input.description,
