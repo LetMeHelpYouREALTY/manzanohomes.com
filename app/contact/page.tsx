@@ -1,4 +1,5 @@
-import ContactForm from "@/components/forms/ContactForm";
+import CalendlyEmbed from "@/components/calendly/CalendlyEmbed";
+import CalendlyPopupButton from "@/components/calendly/CalendlyPopupButton";
 import FaqSection from "@/components/sections/FaqSection";
 import PageHero from "@/components/sections/PageHero";
 import PageVisualBlock from "@/components/sections/PageVisualBlock";
@@ -23,8 +24,8 @@ const faqs = [
     answer: SITE.hoursDisplay,
   },
   {
-    question: "How fast do you return calls?",
-    answer: "Same business day during listed hours. After hours, leave a message or text the office line.",
+    question: "How do I book a tour or a call?",
+    answer: `Use the Calendly widget on this page, the sitewide “Schedule time with me” badge, or call ${SITE.phoneDisplay}.`,
   },
 ];
 
@@ -49,6 +50,7 @@ export default function ContactPage() {
 
       <section className="bg-white py-10">
         <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3 px-4">
+          <CalendlyPopupButton event="showing" label="Book a tour" />
           <a className="rounded-lg bg-primary-600 px-5 py-3 font-semibold text-white" href={`tel:${SITE.phoneTel}`}>
             Call {SITE.phoneDisplay}
           </a>
@@ -76,8 +78,11 @@ export default function ContactPage() {
       <section className="bg-slate-50 py-16">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-2">
           <div className="rounded-xl bg-white p-8 shadow">
-            <h2 className="mb-6 text-2xl font-bold">Send a message</h2>
-            <ContactForm />
+            <h2 className="mb-6 text-2xl font-bold">Book a time with {SITE.agent}</h2>
+            <p className="mb-6 text-slate-600">
+              Calendly books the slot. Call {SITE.phoneDisplay} if you need a same-hour callback.
+            </p>
+            <CalendlyEmbed event="conversation" />
           </div>
           <div className="space-y-6">
             <div className="rounded-xl bg-white p-8 shadow">

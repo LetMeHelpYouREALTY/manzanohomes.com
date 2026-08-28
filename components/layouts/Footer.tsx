@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CalendlyPopupButton from "@/components/calendly/CalendlyPopupButton";
 import { FOOTER_LINKS, SITE } from "@/lib/site";
 
 export default function Footer() {
@@ -37,6 +38,7 @@ export default function Footer() {
             >
               Call
             </a>
+            <CalendlyPopupButton event="conversation" label="Schedule" variant="footer" />
             <a
               className="rounded border border-slate-600 px-3 py-2 hover:bg-slate-800"
               href={SITE.mapsUrl}

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import CalendlyPopupButton from "@/components/calendly/CalendlyPopupButton";
 import { SITE } from "@/lib/site";
 
 type PageHeroProps = {
@@ -35,6 +36,7 @@ export default function PageHero({
         ) : null}
         {showCtas ? (
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <CalendlyPopupButton event="showing" label="Book a tour" variant="light" />
             <a
               href={`tel:${SITE.phoneTel}`}
               className="rounded-lg bg-primary-600 px-6 py-3 font-semibold hover:bg-primary-500"
@@ -43,7 +45,7 @@ export default function PageHero({
             </a>
             <Link
               href="/homes-for-sale"
-              className="rounded-lg bg-white px-6 py-3 font-semibold text-slate-900 hover:bg-slate-100"
+              className="rounded-lg border-2 border-white px-6 py-3 font-semibold hover:bg-white/10"
             >
               Search listings
             </Link>

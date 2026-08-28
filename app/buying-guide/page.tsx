@@ -243,7 +243,7 @@ export default function BuyingGuidePage() {
       </section>
 
       <FaqSection faqs={faqs} />
-      <CtaBand title="Ready to start in 89121?" />
+      <CtaBand title="Ready to start in 89121?" calendlyEvent="buyer" primaryLabel="Book a buyer consult" />
     </>
   );
 }

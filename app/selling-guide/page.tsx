@@ -173,10 +173,10 @@ export default function SellingGuidePage() {
       <FaqSection faqs={contactFaqs} />
       <CtaBand
         title="Ready to list in 89121?"
-        primaryHref="/home-valuation"
-        primaryLabel="Get a valuation"
-        secondaryHref="/contact"
-        secondaryLabel="Schedule a consult"
+        calendlyEvent="listing"
+        primaryLabel="Book a listing consult"
+        secondaryHref="/home-valuation"
+        secondaryLabel="Valuation widget"
       />
     </>
   );

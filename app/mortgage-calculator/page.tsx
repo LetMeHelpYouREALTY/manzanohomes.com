@@ -38,7 +38,11 @@ export default function MortgagePage() {
       <section className="mx-auto max-w-4xl px-4 py-16">
         <MortgageCalculator />
       </section>
-      <CtaBand title="Want this payment run on a specific 89121 address?" />
+      <CtaBand
+        title="Want this payment run on a specific 89121 address?"
+        calendlyEvent="conversation"
+        primaryLabel="Book a call"
+      />
     </>
   );
 }

@@ -76,7 +76,7 @@ export default function TeamPage() {
           </article>
         ))}
       </section>
-      <CtaBand title="Talk with the Manzano Homes team" primaryLabel="Contact the office" />
+      <CtaBand title="Talk with the Manzano Homes team" calendlyEvent="conversation" primaryLabel="Book a time" />
     </>
   );
 }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import CalendlyPopupButton from "@/components/calendly/CalendlyPopupButton";
 import { NAV_ITEMS, SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -47,12 +48,7 @@ export default function Header() {
           >
             {SITE.phoneDisplay}
           </a>
-          <Link
-            href="/contact"
-            className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700"
-          >
-            Get Started
-          </Link>
+          <CalendlyPopupButton event="conversation" label="Get Started" variant="header" />
         </nav>
 
         <div className="flex items-center gap-3 md:hidden">
@@ -87,12 +83,12 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/contact"
-            className="mt-2 block rounded-md bg-primary-600 px-3 py-2 text-center font-medium text-white"
-          >
-            Get Started
-          </Link>
+          <CalendlyPopupButton
+            event="conversation"
+            label="Get Started"
+            variant="header"
+            className="mt-2 block w-full"
+          />
         </div>
       ) : null}
     </header>

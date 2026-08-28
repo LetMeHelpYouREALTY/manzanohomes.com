@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import ContactForm from "@/components/forms/ContactForm";
+import CalendlyPopupButton from "@/components/calendly/CalendlyPopupButton";
+import CalendlySection from "@/components/calendly/CalendlySection";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import FaqSection from "@/components/sections/FaqSection";
 import PageVisualBlock from "@/components/sections/PageVisualBlock";
@@ -27,7 +28,8 @@ const faqs = [
   },
   {
     question: "How do I search live listings?",
-    answer: "Open the Homes for Sale page for the RealScout MLS search, or call for a saved search on 89121 streets.",
+    answer:
+      "Use the Calendly scheduler on this site or call for a saved search on 89121 streets.",
   },
 ];
 
@@ -68,9 +70,10 @@ export default function HomePage() {
             <span className="rounded-full bg-white/20 px-4 py-2 text-sm">89121 comps</span>
           </div>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <CalendlyPopupButton event="showing" label="Book a tour" variant="light" />
             <Link
               href="/homes-for-sale"
-              className="rounded-lg bg-white px-6 py-3 font-semibold text-slate-900"
+              className="rounded-lg bg-white/15 px-6 py-3 font-semibold"
             >
               Search listings
             </Link>
@@ -145,15 +148,11 @@ export default function HomePage() {
 
       <FaqSection faqs={faqs} />
 
-      <section className="bg-slate-50 py-16">
-        <div className="mx-auto max-w-xl px-4">
-          <h2 className="mb-6 text-center text-3xl font-bold text-slate-900">Get in touch</h2>
-          <p className="mb-6 text-center text-slate-600">
-            {SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}
-          </p>
-          <ContactForm />
-        </div>
-      </section>
+      <CalendlySection
+        title="Get in touch"
+        event="conversation"
+        body={`${SITE.address.street}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}. Pick a time or call ${SITE.phoneDisplay}.`}
+      />
     </>
   );
 }

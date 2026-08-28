@@ -270,7 +270,7 @@ export default function CareersPage() {
       </section>
 
       <FaqSection faqs={faqs} />
-      <CtaBand title="Questions about a role?" primaryHref="/contact" primaryLabel="Contact the office" />
+      <CtaBand title="Questions about a role?" calendlyEvent="conversation" primaryLabel="Book a call" />
     </>
   );
 }

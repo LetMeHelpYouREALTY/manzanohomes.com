@@ -1,11 +1,13 @@
 import Link from "next/link";
-import ContactForm from "@/components/forms/ContactForm";
+import CalendlyPopupButton from "@/components/calendly/CalendlyPopupButton";
+import CalendlySection from "@/components/calendly/CalendlySection";
 import RealScoutHomeValue from "@/components/realscout/RealScoutHomeValue";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import PageHero from "@/components/sections/PageHero";
 import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
 import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
+import type { CalendlyEvent } from "@/lib/calendly";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
@@ -14,20 +16,19 @@ type CtaKind = "tour" | "contact" | "none";
 function MarketingCta({
   showForm,
   cta = "tour",
+  calendlyEvent = "conversation",
 }: {
   showForm?: boolean;
   cta?: CtaKind;
+  calendlyEvent?: CalendlyEvent;
 }) {
   if (showForm) {
     return (
-      <section className="bg-slate-50 py-16">
-        <div className="mx-auto max-w-xl px-4">
-          <h2 className="mb-6 text-center text-3xl font-bold text-slate-900">
-            Talk with {SITE.agent}
-          </h2>
-          <ContactForm />
-        </div>
-      </section>
+      <CalendlySection
+        title={`Talk with ${SITE.agent}`}
+        event={calendlyEvent}
+        body={`Book a Calendly slot for 89121. Call ${SITE.phoneDisplay} if you need a same-hour callback.`}
+      />
     );
   }
 
@@ -42,12 +43,15 @@ function MarketingCta({
             {SITE.address.street}, {SITE.address.city}, {SITE.address.region}{" "}
             {SITE.address.postalCode}
           </p>
-          <Link
-            href="/contact"
-            className="mt-6 inline-block rounded-lg bg-white px-6 py-3 font-semibold text-primary-800"
-          >
-            Contact Manzano Homes
-          </Link>
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <CalendlyPopupButton event="conversation" label="Book a time" variant="light" />
+            <Link
+              href="/contact"
+              className="inline-block rounded-lg border-2 border-white px-6 py-3 font-semibold"
+            >
+              Office details
+            </Link>
+          </div>
         </section>
       );
     case "tour":
@@ -58,12 +62,9 @@ function MarketingCta({
             {SITE.address.street}, {SITE.address.city}, {SITE.address.region}{" "}
             {SITE.address.postalCode}
           </p>
-          <Link
-            href="/contact"
-            className="mt-6 inline-block rounded-lg bg-white px-6 py-3 font-semibold text-primary-800"
-          >
-            Request a tour
-          </Link>
+          <div className="mt-6">
+            <CalendlyPopupButton event="showing" label="Book a tour" variant="light" />
+          </div>
         </section>
       );
     default: {
@@ -87,6 +88,7 @@ export type MarketingContent = {
   showForm?: boolean;
   showHomeValue?: boolean;
   cta?: CtaKind;
+  calendlyEvent?: CalendlyEvent;
 };
 
 export default function MarketingPage({ content }: { content: MarketingContent }) {
@@ -172,7 +174,11 @@ export default function MarketingPage({ content }: { content: MarketingContent }
         </div>
       </section>
 
-      <MarketingCta showForm={content.showForm} cta={content.cta} />
+      <MarketingCta
+        showForm={content.showForm}
+        cta={content.cta}
+        calendlyEvent={content.calendlyEvent}
+      />
     </>
   );
 }

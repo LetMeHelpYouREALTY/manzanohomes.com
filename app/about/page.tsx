@@ -123,7 +123,7 @@ export default function AboutPage() {
       </section>
 
       <FaqSection faqs={contactFaqs} />
-      <CtaBand title="Ready to work with us?" />
+      <CtaBand title="Ready to work with us?" calendlyEvent="conversation" primaryLabel="Book a time" />
     </>
   );
 }

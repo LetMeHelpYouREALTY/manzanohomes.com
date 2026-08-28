@@ -4,7 +4,7 @@ import { SITE } from "./site";
 const contactFaq = [
   {
     question: "How do I reach Manzano Homes?",
-    answer: `Call ${SITE.phoneDisplay}, email ${SITE.email}, or use the contact form. Office hours are ${SITE.hoursDisplay} at ${SITE.address.street}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}.`,
+    answer: `Call ${SITE.phoneDisplay}, email ${SITE.email}, or book a Calendly time. Office hours are ${SITE.hoursDisplay} at ${SITE.address.street}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}.`,
   },
   {
     question: "What services does Manzano Homes provide?",
@@ -201,6 +201,7 @@ export const PAGES: Record<string, MarketingContent> = {
     faqs: contactFaq,
     showForm: true,
     showHomeValue: true,
+    calendlyEvent: "listing",
   },
   "/3693-manzano-peak-ave": {
     path: "/3693-manzano-peak-ave",

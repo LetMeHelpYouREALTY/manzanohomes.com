@@ -1,10 +1,12 @@
 import Link from "next/link";
+import CalendlyPopupButton from "@/components/calendly/CalendlyPopupButton";
+import type { CalendlyEvent } from "@/lib/calendly";
 import { SITE } from "@/lib/site";
 
 type CtaBandProps = {
   title: string;
   body?: string;
-  primaryHref?: string;
+  calendlyEvent?: CalendlyEvent;
   primaryLabel?: string;
   secondaryHref?: string;
   secondaryLabel?: string;
@@ -13,8 +15,8 @@ type CtaBandProps = {
 export default function CtaBand({
   title,
   body,
-  primaryHref = "/contact",
-  primaryLabel = "Request a tour",
+  calendlyEvent = "showing",
+  primaryLabel = "Book a tour",
   secondaryHref = "/homes-for-sale",
   secondaryLabel = "Search listings",
 }: CtaBandProps) {
@@ -27,12 +29,7 @@ export default function CtaBand({
           {SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link
-            href={primaryHref}
-            className="rounded-lg bg-white px-6 py-3 font-semibold text-primary-800 hover:bg-slate-100"
-          >
-            {primaryLabel}
-          </Link>
+          <CalendlyPopupButton event={calendlyEvent} label={primaryLabel} variant="light" />
           <Link
             href={secondaryHref}
             className="rounded-lg border-2 border-white px-6 py-3 font-semibold hover:bg-white/10"
