@@ -11,9 +11,9 @@ const path = "/team";
 const visual = getPageVisual(path);
 
 export const metadata = pageMetadata({
-  title: "Our Team | Manzano Homes Las Vegas",
+  title: "Manzano Real Estate Agents | Las Vegas 89121 Team",
   description:
-    "Meet Dr. Jan Duffy and the Manzano Homes team at Berkshire Hathaway HomeServices Nevada Properties in Las Vegas 89121.",
+    "Meet the Manzano real estate agents at Manzano Homes — Dr. Jan Duffy and team, Berkshire Hathaway HomeServices Nevada Properties, serving Las Vegas 89121.",
   path,
 });
 
@@ -55,6 +55,16 @@ export default function TeamPage() {
             { name: "Home", url: "/" },
             { name: "Team", url: path },
           ]),
+          ...team.map((member) => ({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: member.name,
+            jobTitle: member.role,
+            email: `mailto:${member.email}`,
+            telephone: SITE.phoneTel,
+            worksFor: { "@id": `${SITE.url}/#organization` },
+            areaServed: `${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}`,
+          })),
         ]}
       />
       <PageHero {...getHeroProps(path)} />

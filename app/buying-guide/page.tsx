@@ -13,9 +13,9 @@ const path = "/buying-guide";
 const visual = getPageVisual(path);
 
 export const metadata = pageMetadata({
-  title: "Las Vegas Buying Guide | Manzano Peak 89121",
+  title: "How to Buy a House in Las Vegas 89121",
   description:
-    "Step-by-step home buying guide for Manzano Peak and Las Vegas 89121: pre-approval, offers, inspections, and closing timelines.",
+    "How to buy a house in Las Vegas: a step-by-step guide from pre-approval to closing for Manzano Peak and 89121 buyers, with Dr. Jan Duffy, BHHS Nevada Properties.",
   path: "/buying-guide",
 });
 
@@ -119,6 +119,11 @@ const mistakes = [
 ];
 
 const faqs = [
+  {
+    question: "How do I buy a house in Las Vegas?",
+    answer:
+      "Get pre-approved with a local lender, hire an agent who works your ZIP, tour homes in your payment range on live MLS, make a comp-backed offer, complete the 10–15 day inspection, finalize financing, then close in about 30–45 days. The eight steps below walk through each stage for Manzano Peak and 89121.",
+  },
   {
     question: "How long does a Manzano Peak purchase take?",
     answer:
