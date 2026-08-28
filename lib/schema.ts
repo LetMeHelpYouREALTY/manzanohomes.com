@@ -144,6 +144,43 @@ export function residenceSchema(input: {
   };
 }
 
+export function realEstateListingListSchema(
+  items: Array<{
+    name: string;
+    path: string;
+    streetAddress: string;
+    description: string;
+  }>,
+): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${SITE.url}/#featured-listings`,
+    name: "Featured Manzano Peak properties in 89121",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: canonicalUrl(item.path),
+      item: {
+        "@type": "RealEstateListing",
+        name: item.name,
+        url: canonicalUrl(item.path),
+        description: item.description,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: item.streetAddress,
+          addressLocality: SITE.address.city,
+          addressRegion: SITE.address.region,
+          postalCode: SITE.address.postalCode,
+          addressCountry: SITE.address.country,
+        },
+      },
+    })),
+  };
+}
+
 export function howToSchema(input: {
   name: string;
   description: string;
