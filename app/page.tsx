@@ -7,8 +7,14 @@ import FaqSection from "@/components/sections/FaqSection";
 import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
 import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
+import { STREET_PROPERTIES } from "@/lib/content/properties";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
+import {
+  breadcrumbSchema,
+  faqSchema,
+  realEstateListingListSchema,
+  webPageSchema,
+} from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
 const visual = getPageVisual("/");
@@ -29,8 +35,30 @@ const faqs = [
   {
     question: "How do I search live listings?",
     answer:
-      "Use the Calendly scheduler on this site or call for a saved search on 89121 streets.",
+      "Use the live MLS search on the Homes for Sale page, book a tour on Calendly, or call for a saved search on 89121 streets.",
   },
+];
+
+const featuredProperties = STREET_PROPERTIES.map((property) => ({
+  name: property.fullAddress,
+  path: property.path,
+  streetAddress: `${property.streetNumber} Manzano Peak Ave`,
+  description: property.subtitle,
+}));
+
+const exploreLinks: Array<{ href: string; label: string }> = [
+  { href: "/89121-real-estate", label: "89121 homes for sale" },
+  { href: "/89178-real-estate", label: "89178 Mountains Edge real estate" },
+  { href: "/89179-real-estate", label: "89179 Southern Highlands real estate" },
+  { href: "/89138-real-estate", label: "89138 Summerlin West real estate" },
+  { href: "/manzano-peak-neighborhood", label: "Manzano Peak neighborhood guide" },
+  { href: "/homes-near-manzano-elementary", label: "Homes near Manzano Elementary School" },
+  { href: "/homes-near-green-valley-high-school", label: "Homes near Green Valley High School" },
+  { href: "/homes-near-coronado-high-school", label: "Homes near Coronado High School" },
+  { href: "/buying-guide", label: "89121 buying guide" },
+  { href: "/selling-guide", label: "Manzano Peak selling guide" },
+  { href: "/market-reports", label: "89121 market reports" },
+  { href: "/mortgage-calculator", label: "Las Vegas mortgage calculator" },
 ];
 
 export default function HomePage() {
@@ -44,6 +72,7 @@ export default function HomePage() {
             path: "/",
           }),
           breadcrumbSchema([{ name: "Home", url: "/" }]),
+          realEstateListingListSchema(featuredProperties),
           faqSchema(faqs),
         ]}
       />
@@ -130,6 +159,33 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <h2 className="text-center text-3xl font-bold text-slate-900">
+            Featured Manzano Peak addresses
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-slate-600">
+            Street files for the 89121 block around {SITE.address.street}. Live MLS status,
+            price, and square footage are confirmed on request — not frozen on these pages.
+          </p>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {featuredProperties.map((property) => (
+              <Link
+                key={property.path}
+                href={property.path}
+                className="rounded-xl border border-slate-200 p-6 transition hover:shadow-md"
+              >
+                <h3 className="text-xl font-bold text-slate-900">{property.streetAddress}</h3>
+                <p className="mt-2 text-sm text-slate-600">{property.description}</p>
+                <span className="mt-4 inline-block font-semibold text-primary-700">
+                  View street file →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-primary-700 py-12 text-white">
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 text-center md:grid-cols-3">
           <div>
@@ -144,6 +200,74 @@ export default function HomePage() {
             <div className="text-4xl font-bold">72</div>
             <div className="text-primary-100">Walk Score</div>
           </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 md:grid-cols-2">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900">Visit the Manzano Peak office</h2>
+            <p className="mt-4 text-lg text-slate-700">
+              {SITE.address.street}, {SITE.address.city}, {SITE.address.region}{" "}
+              {SITE.address.postalCode}. {SITE.agent}, {SITE.brokerage} — license {SITE.license}.
+            </p>
+            <p className="mt-2 text-slate-600">Hours: {SITE.hoursDisplay}.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                className="rounded-lg bg-primary-600 px-5 py-3 font-semibold text-white hover:bg-primary-500"
+                href={`tel:${SITE.phoneTel}`}
+              >
+                Call {SITE.phoneDisplay}
+              </a>
+              <a
+                className="rounded-lg border border-primary-600 px-5 py-3 font-semibold text-primary-800 hover:bg-primary-50"
+                href={SITE.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Directions
+              </a>
+              <a
+                className="rounded-lg border border-primary-600 px-5 py-3 font-semibold text-primary-800 hover:bg-primary-50"
+                href={SITE.reviewsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Google Reviews
+              </a>
+            </div>
+          </div>
+          <iframe
+            title={`Map to ${SITE.address.street} ${SITE.address.city} ${SITE.address.postalCode}`}
+            src={SITE.mapsEmbed}
+            className="h-80 w-full rounded-xl border-0"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      </section>
+
+      <section className="bg-slate-50 py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <h2 className="text-center text-3xl font-bold text-slate-900">
+            Explore 89121 &amp; nearby Las Vegas
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-slate-600">
+            Neighborhood guides, zip-code pages, and buyer/seller resources across Manzano Peak
+            and the southeast valley.
+          </p>
+          <ul className="mt-8 flex flex-wrap justify-center gap-3">
+            {exploreLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="inline-block rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-primary-500 hover:text-primary-700"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
