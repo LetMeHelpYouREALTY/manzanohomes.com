@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export type InfoCard = {
@@ -7,6 +8,8 @@ export type InfoCard = {
   description?: string;
   features?: string[];
   href?: string;
+  image?: string;
+  imageAlt?: string;
 };
 
 type InfoCardGridProps = {
@@ -36,6 +39,15 @@ export default function InfoCardGrid({
           {items.map((item) => {
             const inner = (
               <>
+                {item.image ? (
+                  <Image
+                    src={item.image}
+                    alt={item.imageAlt ?? item.name}
+                    width={640}
+                    height={360}
+                    className="-mx-6 -mt-6 mb-4 h-40 w-[calc(100%+3rem)] object-cover"
+                  />
+                ) : null}
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <span className="rounded-full bg-primary-100 px-3 py-1 text-sm font-semibold text-primary-800">
                     {item.type}

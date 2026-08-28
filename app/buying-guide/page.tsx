@@ -1,11 +1,16 @@
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, howToSchema, webPageSchema } from "@/lib/schema";
+
+const path = "/buying-guide";
+const visual = getPageVisual(path);
 
 export const metadata = pageMetadata({
   title: "Las Vegas Buying Guide | Manzano Peak 89121",
@@ -128,9 +133,9 @@ export default function BuyingGuidePage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Complete Home Buying Guide",
+            name: visual.h1,
             description: metadata.description ?? "",
-            path: "/buying-guide",
+            path,
           }),
           breadcrumbSchema([
             { name: "Home", url: "/" },
@@ -146,11 +151,8 @@ export default function BuyingGuidePage() {
           }),
         ]}
       />
-      <PageHero
-        title="Complete home buying guide"
-        subtitle="Eight steps from pre-approval to keys in Manzano Peak and Las Vegas 89121"
-        imageAlt="Buyers touring a Manzano Peak Las Vegas home"
-      />
+      <PageHero {...getHeroProps(path)} />
+      <PageVisualBlock path={path} />
 
       <section className="bg-slate-50 py-16" aria-labelledby="steps-heading">
         <div className="mx-auto max-w-4xl px-4">

@@ -1,14 +1,20 @@
 import ContactForm from "@/components/forms/ContactForm";
 import FaqSection from "@/components/sections/FaqSection";
+import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
+const path = "/contact";
+const visual = getPageVisual(path);
+
 export const metadata = pageMetadata({
   title: "Contact Manzano Homes | 3693 Manzano Peak Ave Las Vegas",
   description: `Contact Dr. Jan Duffy at Manzano Homes. ${SITE.address.street}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}. Call ${SITE.phoneDisplay}.`,
-  path: "/contact",
+  path,
 });
 
 const faqs = [
@@ -28,28 +34,26 @@ export default function ContactPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Contact Manzano Homes",
+            name: visual.h1,
             description: metadata.description ?? "",
-            path: "/contact",
+            path,
           }),
           breadcrumbSchema([
             { name: "Home", url: "/" },
-            { name: "Contact", url: "/contact" },
+            { name: "Contact", url: path },
           ]),
           faqSchema(faqs),
         ]}
       />
-      <section className="bg-gradient-to-br from-primary-600 to-primary-800 px-4 pb-16 pt-28 text-center text-white">
-        <h1 className="text-4xl font-bold md:text-5xl">Contact Manzano Homes</h1>
-        <p className="mt-4 text-lg">
-          {SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <a className="rounded-lg bg-white px-5 py-3 font-semibold text-primary-800" href={`tel:${SITE.phoneTel}`}>
+      <PageHero {...getHeroProps(path)} showCtas={false} />
+
+      <section className="bg-white py-10">
+        <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3 px-4">
+          <a className="rounded-lg bg-primary-600 px-5 py-3 font-semibold text-white" href={`tel:${SITE.phoneTel}`}>
             Call {SITE.phoneDisplay}
           </a>
           <a
-            className="rounded-lg border border-white px-5 py-3"
+            className="rounded-lg border border-slate-300 px-5 py-3 font-semibold text-slate-800"
             href={SITE.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -57,7 +61,7 @@ export default function ContactPage() {
             Directions
           </a>
           <a
-            className="rounded-lg border border-white px-5 py-3"
+            className="rounded-lg border border-slate-300 px-5 py-3 font-semibold text-slate-800"
             href={SITE.reviewsUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -66,6 +70,8 @@ export default function ContactPage() {
           </a>
         </div>
       </section>
+
+      <PageVisualBlock path={path} />
 
       <section className="bg-slate-50 py-16">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-2">

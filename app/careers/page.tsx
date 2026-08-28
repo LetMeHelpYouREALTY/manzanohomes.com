@@ -1,7 +1,10 @@
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
+import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import {
   breadcrumbSchema,
@@ -72,7 +75,7 @@ export default function CareersPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Careers at Manzano Homes",
+            name: getPageVisual("/careers").h1,
             description: metadata.description ?? "",
             path: "/careers",
           }),
@@ -102,18 +105,8 @@ export default function CareersPage() {
         ]}
       />
 
-      <section className="bg-gradient-to-r from-primary-900 to-primary-700 px-4 pb-16 pt-28 text-center text-white">
-        <h1 className="text-4xl font-bold md:text-5xl">Join our real estate team</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-primary-100">
-          Licensed 89121 work with {SITE.brokerage}. Email {SITE.email} with your license number.
-        </p>
-        <a
-          href="#open-positions"
-          className="mt-8 inline-block rounded-lg bg-white px-8 py-3 font-semibold text-primary-900"
-        >
-          View open positions
-        </a>
-      </section>
+      <PageHero {...getHeroProps("/careers")} />
+      <PageVisualBlock path="/careers" />
 
       <section className="bg-slate-50 py-16">
         <div className="mx-auto max-w-6xl px-4">

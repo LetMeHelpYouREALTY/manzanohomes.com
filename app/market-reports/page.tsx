@@ -1,9 +1,11 @@
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 
@@ -15,10 +17,10 @@ export const metadata = pageMetadata({
 });
 
 const stats = [
-  { value: "28", label: "Days on market (recent)" },
-  { value: "$185", label: "Approx. $/sq ft" },
+  { value: "32–46", label: "Days on market (ZIP 2026)" },
+  { value: "$315K", label: "Median SFR (verify MLS)" },
   { value: "12", label: "Nearby actives (varies)" },
-  { value: "$475K", label: "Median list (verify MLS)" },
+  { value: "+3%", label: "YoY ZIP context" },
 ];
 
 export default function MarketReportsPage() {
@@ -27,7 +29,7 @@ export default function MarketReportsPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Manzano Peak Market Reports",
+            name: getPageVisual("/market-reports").h1,
             description: metadata.description ?? "",
             path: "/market-reports",
           }),
@@ -38,11 +40,8 @@ export default function MarketReportsPage() {
           faqSchema(contactFaqs),
         ]}
       />
-      <PageHero
-        title="Manzano Peak market reports"
-        subtitle="89121 days on market, list bands, and current inventory"
-        imageAlt="Las Vegas 89121 housing market context near Manzano Peak"
-      />
+      <PageHero {...getHeroProps("/market-reports")} />
+      <PageVisualBlock path="/market-reports" />
 
       <section className="bg-white py-16">
         <div className="mx-auto max-w-4xl px-4">

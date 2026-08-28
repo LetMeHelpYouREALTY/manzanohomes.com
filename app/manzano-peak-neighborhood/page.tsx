@@ -2,9 +2,11 @@ import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import InfoCardGrid from "@/components/sections/InfoCardGrid";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 
@@ -19,7 +21,7 @@ const faqs = [
   {
     question: "What is the median home price in Manzano Peak?",
     answer:
-      "Recent median list is about $475,000, with a $350,000–$750,000 band. Live MLS prices still beat any web snippet.",
+      "Recent 89121 ZIP medians for existing homes clustered near $315,000. KB Home lists Vales at Manzano from about $315,990. Live MLS prices still beat any web snippet.",
   },
   {
     question: "How far is Manzano Peak from the Las Vegas Strip?",
@@ -39,7 +41,7 @@ export default function ManzanoPeakPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Manzano Peak Neighborhood",
+            name: getPageVisual("/manzano-peak-neighborhood").h1,
             description: metadata.description ?? "",
             path: "/manzano-peak-neighborhood",
           }),
@@ -50,11 +52,8 @@ export default function ManzanoPeakPage() {
           faqSchema(faqs),
         ]}
       />
-      <PageHero
-        title="Manzano Peak Neighborhood"
-        subtitle="Southeast Las Vegas 89121 · 150+ homes · 2015-era construction"
-        imageAlt="Street view of Manzano Peak neighborhood Las Vegas homes"
-      />
+      <PageHero {...getHeroProps("/manzano-peak-neighborhood")} />
+      <PageVisualBlock path="/manzano-peak-neighborhood" />
 
       <section className="bg-white py-16">
         <div className="mx-auto max-w-4xl px-4">
@@ -70,7 +69,7 @@ export default function ManzanoPeakPage() {
       <section className="bg-slate-900 py-12 text-white">
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-4 md:grid-cols-4">
           {[
-            { value: "$485K", label: "Average list" },
+            { value: "$316K+", label: "Vales from (verify)" },
             { value: "72", label: "Walk Score" },
             { value: "12 mi", label: "To the Strip" },
             { value: "2015+", label: "Build years" },
@@ -112,6 +111,8 @@ export default function ManzanoPeakPage() {
             distance: "0.3 miles",
             href: "/homes-near-manzano-elementary",
             description: "CCSD elementary 0.3 miles from 3693 Manzano Peak Ave.",
+            image: "/media/hero-school-elem.jpg",
+            imageAlt: "Elementary campus exterior in Las Vegas 89121",
           },
           {
             name: "Southeast Career Technical Academy",
@@ -119,6 +120,8 @@ export default function ManzanoPeakPage() {
             distance: "1.2 miles",
             href: "/homes-near-southeast-career-technical-academy",
             description: "Career and technical campus 1.2 miles away.",
+            image: "/media/hero-school-secta.jpg",
+            imageAlt: "Career technical academy campus in Las Vegas 89120",
           },
           {
             name: "Green Valley High School",
@@ -126,6 +129,8 @@ export default function ManzanoPeakPage() {
             distance: "2.1 miles",
             href: "/homes-near-green-valley-high-school",
             description: "Henderson high school 2.1 miles away.",
+            image: "/media/hero-school-hs.jpg",
+            imageAlt: "Henderson Nevada high school campus exterior",
           },
           {
             name: "Coronado High School",
@@ -133,6 +138,8 @@ export default function ManzanoPeakPage() {
             distance: "2.8 miles",
             href: "/homes-near-coronado-high-school",
             description: "Henderson high school 2.8 miles away.",
+            image: "/media/hero-school-hs.jpg",
+            imageAlt: "Henderson high school campus buildings",
           },
         ]}
         tone="slate"
@@ -146,18 +153,24 @@ export default function ManzanoPeakPage() {
             type: "Entertainment",
             distance: "3.2 miles",
             description: "Resort retail and dining.",
+            image: "/media/h3-shopping.jpg",
+            imageAlt: "Open-air shopping plaza with palms in the Las Vegas valley",
           },
           {
             name: "The District at Green Valley Ranch",
             type: "Shopping center",
             distance: "3.5 miles",
             description: "Open-air restaurants and retail.",
+            image: "/media/h3-grocery.jpg",
+            imageAlt: "Retail street in Henderson Nevada",
           },
           {
             name: "Galleria at Sunset",
             type: "Shopping mall",
             distance: "5.2 miles",
             description: "Enclosed mall with department stores.",
+            image: "/media/h3-shopping.jpg",
+            imageAlt: "Shopping mall exterior in Henderson Nevada",
           },
         ]}
         tone="white"
@@ -171,18 +184,24 @@ export default function ManzanoPeakPage() {
             type: "Neighborhood park",
             distance: "0.1 miles",
             features: ["Playground", "Walking trails", "Picnic areas", "Basketball court"],
+            image: "/media/h3-park.jpg",
+            imageAlt: "Pocket park with playground in Manzano Peak Las Vegas",
           },
           {
             name: "Sunset Park",
             type: "Regional park",
             distance: "2.8 miles",
             features: ["Lake", "Walking trails", "Sports fields"],
+            image: "/media/h3-park.jpg",
+            imageAlt: "Regional park walking path in Las Vegas",
           },
           {
             name: "Pecos Legacy Park",
             type: "Sports complex",
             distance: "3.1 miles",
             features: ["Baseball fields", "Soccer fields", "Walking trails"],
+            image: "/media/h3-park.jpg",
+            imageAlt: "Sports complex fields in southeast Las Vegas",
           },
         ]}
         tone="slate"

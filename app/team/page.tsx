@@ -1,14 +1,20 @@
 import CtaBand from "@/components/sections/CtaBand";
+import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
+
+const path = "/team";
+const visual = getPageVisual(path);
 
 export const metadata = pageMetadata({
   title: "Our Team | Manzano Homes Las Vegas",
   description:
     "Meet Dr. Jan Duffy and the Manzano Homes team at Berkshire Hathaway HomeServices Nevada Properties in Las Vegas 89121.",
-  path: "/team",
+  path,
 });
 
 const team = [
@@ -41,20 +47,18 @@ export default function TeamPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Manzano Homes Team",
+            name: visual.h1,
             description: metadata.description ?? "",
-            path: "/team",
+            path,
           }),
           breadcrumbSchema([
             { name: "Home", url: "/" },
-            { name: "Team", url: "/team" },
+            { name: "Team", url: path },
           ]),
         ]}
       />
-      <section className="bg-primary-800 px-4 pb-12 pt-28 text-center text-white">
-        <h1 className="text-4xl font-bold">The Manzano Homes team</h1>
-        <p className="mt-3">{SITE.brokerage} · License# {SITE.license}</p>
-      </section>
+      <PageHero {...getHeroProps(path)} />
+      <PageVisualBlock path={path} />
       <section className="mx-auto grid max-w-6xl gap-6 px-4 py-16 md:grid-cols-3">
         {team.map((member) => (
           <article key={member.name} className="rounded-xl border border-slate-200 p-6">

@@ -5,15 +5,22 @@ import { SITE } from "@/lib/site";
 type PageHeroProps = {
   title: string;
   subtitle?: string;
+  imageSrc?: string;
   imageAlt: string;
   showCtas?: boolean;
 };
 
-export default function PageHero({ title, subtitle, imageAlt, showCtas = true }: PageHeroProps) {
+export default function PageHero({
+  title,
+  subtitle,
+  imageSrc = "/media/hero-home.jpg",
+  imageAlt,
+  showCtas = true,
+}: PageHeroProps) {
   return (
     <section className="relative overflow-hidden pt-24 text-white md:pt-32">
       <Image
-        src="/hero-manzano.jpg"
+        src={imageSrc}
         alt={imageAlt}
         fill
         priority

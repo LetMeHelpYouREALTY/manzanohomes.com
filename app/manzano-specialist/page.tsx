@@ -1,9 +1,11 @@
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
@@ -34,7 +36,7 @@ export default function SpecialistPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Manzano Peak Specialist Guide",
+            name: getPageVisual("/manzano-specialist").h1,
             description: metadata.description ?? "",
             path: "/manzano-specialist",
           }),
@@ -45,11 +47,8 @@ export default function SpecialistPage() {
           faqSchema(faqs),
         ]}
       />
-      <PageHero
-        title="Manzano Peak specialist guide"
-        subtitle="HOA, commute, retail distances, and resale context for 89121"
-        imageAlt="Manzano Peak community exterior in Southeast Las Vegas"
-      />
+      <PageHero {...getHeroProps("/manzano-specialist")} />
+      <PageVisualBlock path="/manzano-specialist" />
 
       <section className="bg-white py-16">
         <div className="mx-auto grid max-w-6xl gap-6 px-4 md:grid-cols-3">

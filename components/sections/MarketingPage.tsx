@@ -2,13 +2,11 @@ import Link from "next/link";
 import ContactForm from "@/components/forms/ContactForm";
 import RealScoutHomeValue from "@/components/realscout/RealScoutHomeValue";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
-import JsonLd from "@/components/seo/JsonLd";
 import PageHero from "@/components/sections/PageHero";
-import {
-  breadcrumbSchema,
-  faqSchema,
-  webPageSchema,
-} from "@/lib/schema";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
+import JsonLd from "@/components/seo/JsonLd";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
 type CtaKind = "tour" | "contact" | "none";
@@ -92,15 +90,16 @@ export type MarketingContent = {
 };
 
 export default function MarketingPage({ content }: { content: MarketingContent }) {
+  const visual = getPageVisual(content.path);
   const schemas = [
     webPageSchema({
-      name: content.h1,
+      name: visual.h1,
       description: content.description,
       path: content.path,
     }),
     breadcrumbSchema([
       { name: "Home", url: "/" },
-      { name: content.h1, url: content.path },
+      { name: visual.h1, url: content.path },
     ]),
     faqSchema(content.faqs),
   ];
@@ -108,12 +107,7 @@ export default function MarketingPage({ content }: { content: MarketingContent }
   return (
     <>
       <JsonLd data={schemas} />
-      <PageHero
-        title={content.h1}
-        subtitle={content.subtitle}
-        imageAlt={content.imageAlt}
-        showCtas={content.cta !== "contact"}
-      />
+      <PageHero {...getHeroProps(content.path)} showCtas={content.cta !== "contact"} />
 
       <section className="bg-white py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
@@ -124,6 +118,8 @@ export default function MarketingPage({ content }: { content: MarketingContent }
           ))}
         </div>
       </section>
+
+      <PageVisualBlock path={content.path} />
 
       {content.showHomeValue ? (
         <section className="bg-slate-50 py-16">

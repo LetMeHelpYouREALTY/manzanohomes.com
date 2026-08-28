@@ -1,9 +1,11 @@
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
@@ -21,7 +23,7 @@ export default function PropertyPinPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "3693 Manzano Peak Ave",
+            name: getPageVisual("/3693-manzano-peak-ave").h1,
             description: metadata.description ?? "",
             path: "/3693-manzano-peak-ave",
           }),
@@ -32,11 +34,8 @@ export default function PropertyPinPage() {
           faqSchema(contactFaqs),
         ]}
       />
-      <PageHero
-        title="3693 Manzano Peak Ave"
-        subtitle="Las Vegas, NV 89121 — office, tours, and nearby listings"
-        imageAlt="3693 Manzano Peak Ave Las Vegas NV 89121"
-      />
+      <PageHero {...getHeroProps("/3693-manzano-peak-ave")} />
+      <PageVisualBlock path="/3693-manzano-peak-ave" />
 
       <section className="bg-white py-16">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-2">
