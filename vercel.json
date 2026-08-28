@@ -11,6 +11,18 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "manzanohomes.com" }],
+      "destination": "https://www.manzanohomes.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "manzanohomes.com" }],
+      "destination": "https://www.manzanohomes.com/:path*",
+      "permanent": true
+    },
     { "source": "/home", "destination": "/", "permanent": true },
     {
       "source": "/homes-near/manzano-elementary",

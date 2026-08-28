@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import PageHero from "@/components/sections/PageHero";
@@ -60,6 +61,21 @@ export default function PropertyPinPage() {
                 </a>
               </p>
             </address>
+            <p className="mt-6 text-slate-700">
+              Same-street files Google already discovered:{" "}
+              <Link className="text-primary-700 underline" href="/property/3675-manzano-peak">
+                3675 Manzano Peak Ave
+              </Link>
+              ,{" "}
+              <Link className="text-primary-700 underline" href="/property/3687-manzano-peak">
+                3687 Manzano Peak Ave
+              </Link>
+              , and the{" "}
+              <Link className="text-primary-700 underline" href="/property/3693-manzano-peak">
+                3693 property-path URL
+              </Link>
+              .
+            </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
                 className="rounded-lg bg-primary-600 px-5 py-3 font-semibold text-white"

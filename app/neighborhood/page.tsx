@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import InfoCardGrid from "@/components/sections/InfoCardGrid";
@@ -183,6 +184,32 @@ export default function NeighborhoodPage() {
         ]}
         tone="white"
       />
+
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <h2 className="text-3xl font-bold text-slate-900">Manzano Peak Ave street files</h2>
+          <p className="mt-4 text-lg text-slate-700">
+            These addresses are the URLs Google already found. Each page is a street file — live
+            price and status stay on MLS.
+          </p>
+          <ul className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            {[
+              { href: "/property/3675-manzano-peak", label: "3675 Manzano Peak Ave" },
+              { href: "/property/3687-manzano-peak", label: "3687 Manzano Peak Ave" },
+              { href: "/property/3693-manzano-peak", label: "3693 Manzano Peak Ave" },
+            ].map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="inline-block rounded-lg border border-primary-600 px-5 py-3 font-semibold text-primary-800"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       <section className="bg-slate-50 py-16">
         <div className="mx-auto max-w-6xl px-4">

@@ -120,6 +120,30 @@ export function webPageSchema(input: {
   };
 }
 
+export function residenceSchema(input: {
+  name: string;
+  description: string;
+  path: string;
+  streetAddress: string;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Residence",
+    "@id": `${canonicalUrl(input.path)}#place`,
+    name: input.name,
+    description: input.description,
+    url: canonicalUrl(input.path),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: input.streetAddress,
+      addressLocality: SITE.address.city,
+      addressRegion: SITE.address.region,
+      postalCode: SITE.address.postalCode,
+      addressCountry: SITE.address.country,
+    },
+  };
+}
+
 export function howToSchema(input: {
   name: string;
   description: string;

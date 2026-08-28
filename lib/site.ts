@@ -71,6 +71,9 @@ export const FOOTER_LINKS = {
     { href: "/market-reports", label: "Market Reports" },
     { href: "/buying-guide", label: "Buying Guide" },
     { href: "/selling-guide", label: "Selling Guide" },
+    { href: "/property/3675-manzano-peak", label: "3675 Manzano Peak Ave" },
+    { href: "/property/3687-manzano-peak", label: "3687 Manzano Peak Ave" },
+    { href: "/property/3693-manzano-peak", label: "3693 property file" },
   ],
   legal: [
     { href: "/privacy-policy", label: "Privacy Policy" },
