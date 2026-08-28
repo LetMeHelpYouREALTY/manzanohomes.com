@@ -1,5 +1,8 @@
+import CtaBand from "@/components/sections/CtaBand";
+import FaqSection from "@/components/sections/FaqSection";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
+import { contactFaqs } from "@/lib/content/shared-faqs";
 import { breadcrumbSchema, faqSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
 
 type SchoolHomesPageProps = {
@@ -24,6 +27,12 @@ export default function SchoolHomesPage({
       question: `How far is ${name} from Manzano Peak?`,
       answer: `${distance} from 3693 Manzano Peak Ave.`,
     },
+    {
+      question: "Does buying near this campus guarantee a seat?",
+      answer:
+        "No. CCSD zoning is street-specific and can change. We pull the current assignment for the exact address before you tour.",
+    },
+    ...contactFaqs,
   ];
 
   return (
@@ -45,9 +54,18 @@ export default function SchoolHomesPage({
           {type} · {distance} · {address}
         </p>
       </section>
-      <section className="mx-auto max-w-6xl px-4 py-16">
+      <section className="mx-auto max-w-3xl px-4 py-12">
+        <p className="text-lg text-slate-700">{description}</p>
+        <p className="mt-4 text-slate-600">
+          Use the live MLS widget for today&apos;s inventory, then we confirm commute time and the
+          current CCSD assignment for the street you actually bid on.
+        </p>
+      </section>
+      <section className="mx-auto max-w-6xl px-4 pb-16">
         <RealScoutListings />
       </section>
+      <FaqSection faqs={faqs} />
+      <CtaBand title={`Tour homes near ${name}`} />
     </>
   );
 }

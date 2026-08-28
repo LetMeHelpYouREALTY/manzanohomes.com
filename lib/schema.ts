@@ -119,3 +119,81 @@ export function webPageSchema(input: {
     about: { "@id": ORG_ID },
   };
 }
+
+export function howToSchema(input: {
+  name: string;
+  description: string;
+  path: string;
+  totalTime: string;
+  steps: Array<{ name: string; text: string }>;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: input.name,
+    description: input.description,
+    url: canonicalUrl(input.path),
+    totalTime: input.totalTime,
+    step: input.steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
+  };
+}
+
+type EmploymentType = "FULL_TIME" | "PART_TIME";
+
+export function jobPostingSchema(input: {
+  title: string;
+  description: string;
+  datePosted: string;
+  validThrough: string;
+  employmentType: EmploymentType;
+  minSalary?: number;
+  maxSalary?: number;
+}): JsonLd {
+  const salary =
+    input.minSalary !== undefined && input.maxSalary !== undefined
+      ? {
+          baseSalary: {
+            "@type": "MonetaryAmount",
+            currency: "USD",
+            value: {
+              "@type": "QuantitativeValue",
+              minValue: input.minSalary,
+              maxValue: input.maxSalary,
+              unitText: "YEAR",
+            },
+          },
+        }
+      : {};
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: input.title,
+    description: input.description,
+    datePosted: input.datePosted,
+    validThrough: input.validThrough,
+    employmentType: input.employmentType,
+    hiringOrganization: {
+      "@type": "Organization",
+      name: SITE.name,
+      sameAs: SITE.url,
+    },
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: SITE.address.street,
+        addressLocality: SITE.address.city,
+        addressRegion: SITE.address.region,
+        postalCode: SITE.address.postalCode,
+        addressCountry: SITE.address.country,
+      },
+    },
+    ...salary,
+  };
+}

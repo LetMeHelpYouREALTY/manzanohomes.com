@@ -1,12 +1,11 @@
-import MarketingPage from "@/components/sections/MarketingPage";
+import ZipMarketPage from "@/components/sections/ZipMarketPage";
+import { getZipPage } from "@/lib/content/zips";
 import { pageMetadata } from "@/lib/metadata";
-import { PAGES } from "@/lib/pages";
 
-const content = PAGES["/89179-real-estate"];
+const content = getZipPage("89179");
 
 export const metadata = pageMetadata(content);
 
 export default function Page() {
-  return <MarketingPage content={content} />;
+  return <ZipMarketPage content={content} />;
 }
-
