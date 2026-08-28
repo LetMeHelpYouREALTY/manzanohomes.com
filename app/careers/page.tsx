@@ -7,7 +7,6 @@ import {
   breadcrumbSchema,
   faqSchema,
   jobPostingSchema,
-  localBusinessSchema,
   webPageSchema,
 } from "@/lib/schema";
 import { SITE } from "@/lib/site";
@@ -72,7 +71,6 @@ export default function CareersPage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Careers at Manzano Homes",
             description: metadata.description ?? "",

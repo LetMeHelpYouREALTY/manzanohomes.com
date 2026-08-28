@@ -147,7 +147,7 @@ export const PAGES: Record<string, MarketingContent> = {
     paragraphs: [
       "We price from the last 90 days of 89121 comps plus active competition within a mile of Manzano Peak Ave.",
       "Pre-list work that moves the needle: paint, lighting, and a 3D tour. Skip vague 'curb appeal' claims — bring a punch list.",
-      "Request a valuation at /home-valuation or call for a walkthrough.",
+      "Request a valuation on the Home Valuation page or call for a walkthrough.",
     ],
     faqs: contactFaq,
     showForm: true,
@@ -182,7 +182,7 @@ export const PAGES: Record<string, MarketingContent> = {
     imageAlt: "Manzano Peak Las Vegas real estate market notes",
     paragraphs: [
       "This feed is for 89121 buyers and sellers who want street-level context: new listings, price cuts, and tour windows.",
-      "For a custom pull, use /market-reports or call the office.",
+      "For a custom pull, use the Market Reports page or call the office.",
     ],
     faqs: contactFaq,
   },
@@ -200,6 +200,7 @@ export const PAGES: Record<string, MarketingContent> = {
     ],
     faqs: contactFaq,
     showForm: true,
+    showHomeValue: true,
   },
   "/3693-manzano-peak-ave": {
     path: "/3693-manzano-peak-ave",
@@ -294,7 +295,8 @@ export const PAGES: Record<string, MarketingContent> = {
   "/privacy-policy": {
     path: "/privacy-policy",
     title: "Privacy Policy | Manzano Homes",
-    description: "Privacy policy for ManzanoHomes.com and lead forms submitted to Follow Up Boss.",
+    description:
+      "Privacy policy for ManzanoHomes.com: how Manzano Homes handles contact-form, valuation, and listing-alert data.",
     h1: "Privacy Policy",
     subtitle: "How Manzano Homes handles contact-form and listing-alert data",
     imageAlt: "Manzano Homes Las Vegas privacy information",
@@ -304,6 +306,7 @@ export const PAGES: Record<string, MarketingContent> = {
       `Questions: ${SITE.email} or ${SITE.phoneDisplay}.`,
     ],
     faqs: contactFaq,
+    cta: "contact",
   },
   "/terms-of-service": {
     path: "/terms-of-service",
@@ -317,6 +320,7 @@ export const PAGES: Record<string, MarketingContent> = {
       "This site is an advertisement for Dr. Jan Duffy, Berkshire Hathaway HomeServices Nevada Properties. Equal Housing Opportunity.",
     ],
     faqs: contactFaq,
+    cta: "contact",
   },
   "/disclaimer": {
     path: "/disclaimer",
@@ -330,6 +334,7 @@ export const PAGES: Record<string, MarketingContent> = {
       "Price, status, and square footage can change without notice. Dr. Jan Duffy / BHHS Nevada Properties is not responsible for third-party data errors.",
     ],
     faqs: contactFaq,
+    cta: "contact",
   },
   "/accessibility": {
     path: "/accessibility",
@@ -342,5 +347,6 @@ export const PAGES: Record<string, MarketingContent> = {
       `If a form, widget, or map blocks you, email ${SITE.email} or call ${SITE.phoneDisplay} and we will provide the same information another way.`,
     ],
     faqs: contactFaq,
+    cta: "contact",
   },
 };

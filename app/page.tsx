@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import ContactForm from "@/components/forms/ContactForm";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
+import FaqSection from "@/components/sections/FaqSection";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, faqSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
 export const metadata = pageMetadata({
@@ -21,7 +22,7 @@ const faqs = [
   },
   {
     question: "How do I search live listings?",
-    answer: "Use /homes-for-sale for the RealScout MLS search, or call for a saved search on 89121 streets.",
+    answer: "Open the Homes for Sale page for the RealScout MLS search, or call for a saved search on 89121 streets.",
   },
 ];
 
@@ -49,7 +50,6 @@ export default function HomePage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Manzano Homes Las Vegas",
             description: SITE.description,
@@ -173,6 +173,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <FaqSection faqs={faqs} />
 
       <section className="bg-slate-50 py-16">
         <div className="mx-auto max-w-xl px-4">

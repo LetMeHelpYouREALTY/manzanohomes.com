@@ -4,7 +4,7 @@ import RealScoutSearch from "@/components/realscout/RealScoutSearch";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 
 export const metadata = pageMetadata({
   title: "Homes for Sale in Manzano Peak | Las Vegas 89121 MLS",
@@ -25,7 +25,6 @@ export default function HomesForSalePage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Homes for Sale in Manzano Peak",
             description: metadata.description ?? "",
@@ -55,10 +54,6 @@ export default function HomesForSalePage() {
         </div>
         <RealScoutSearch />
         <RealScoutListings priceMin="300000" priceMax="800000" />
-        <p className="text-sm text-slate-500">
-          Listing data is supplied by RealScout / MLS and may change without notice. Confirm status
-          before writing an offer.
-        </p>
       </section>
       <CtaBand title="Need a saved search on a specific street?" />
     </>

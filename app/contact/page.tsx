@@ -1,7 +1,8 @@
 import ContactForm from "@/components/forms/ContactForm";
+import FaqSection from "@/components/sections/FaqSection";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, faqSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
 export const metadata = pageMetadata({
@@ -26,7 +27,6 @@ export default function ContactPage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Contact Manzano Homes",
             description: metadata.description ?? "",
@@ -100,6 +100,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <FaqSection faqs={faqs} />
     </>
   );
 }

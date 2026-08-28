@@ -6,9 +6,10 @@ type PageHeroProps = {
   title: string;
   subtitle?: string;
   imageAlt: string;
+  showCtas?: boolean;
 };
 
-export default function PageHero({ title, subtitle, imageAlt }: PageHeroProps) {
+export default function PageHero({ title, subtitle, imageAlt, showCtas = true }: PageHeroProps) {
   return (
     <section className="relative overflow-hidden pt-24 text-white md:pt-32">
       <Image
@@ -25,20 +26,22 @@ export default function PageHero({ title, subtitle, imageAlt }: PageHeroProps) {
         {subtitle ? (
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/90 md:text-xl">{subtitle}</p>
         ) : null}
-        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <a
-            href={`tel:${SITE.phoneTel}`}
-            className="rounded-lg bg-primary-600 px-6 py-3 font-semibold hover:bg-primary-500"
-          >
-            Call {SITE.phoneDisplay}
-          </a>
-          <Link
-            href="/homes-for-sale"
-            className="rounded-lg bg-white px-6 py-3 font-semibold text-slate-900 hover:bg-slate-100"
-          >
-            Search listings
-          </Link>
-        </div>
+        {showCtas ? (
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <a
+              href={`tel:${SITE.phoneTel}`}
+              className="rounded-lg bg-primary-600 px-6 py-3 font-semibold hover:bg-primary-500"
+            >
+              Call {SITE.phoneDisplay}
+            </a>
+            <Link
+              href="/homes-for-sale"
+              className="rounded-lg bg-white px-6 py-3 font-semibold text-slate-900 hover:bg-slate-100"
+            >
+              Search listings
+            </Link>
+          </div>
+        ) : null}
       </div>
     </section>
   );

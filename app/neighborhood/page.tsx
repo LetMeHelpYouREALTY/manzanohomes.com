@@ -6,7 +6,7 @@ import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, faqSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 
 export const metadata = pageMetadata({
   title: "Manzano Neighborhood Las Vegas 89121 | Homes, Parks, Commute",
@@ -34,7 +34,6 @@ export default function NeighborhoodPage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Manzano Neighborhood, Las Vegas 89121",
             description: metadata.description ?? "",

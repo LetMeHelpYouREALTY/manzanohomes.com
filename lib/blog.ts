@@ -11,8 +11,8 @@ export type BlogPost = {
   originalDate: string;
 };
 
-const RSS_URL =
-  "https://www.simplifyingthemarket.com/en/feed?a=956758-ef2edda2f940e018328655620ea05f18";
+const RSS_URL = "https://www.simplifyingthemarket.com/en/feed";
+const AFFILIATE_ID = "956758-ef2edda2f940e018328655620ea05f18";
 
 function stripHtml(value: string): string {
   return value
@@ -36,6 +36,19 @@ function extractImage(itemContent: string, description: string): string | undefi
   const imgMatch = haystack.match(/<img[^>]+src=["']([^"']+)["']/i);
   const image = imgMatch?.[1]?.trim();
   return image || undefined;
+}
+
+function withAffiliate(link: string): string {
+  if (!link.startsWith("http")) return link;
+  try {
+    const url = new URL(link);
+    if (!url.searchParams.has("a")) {
+      url.searchParams.set("a", AFFILIATE_ID);
+    }
+    return url.toString();
+  } catch {
+    return link;
+  }
 }
 
 export const LOCAL_POSTS: BlogPost[] = [
@@ -144,7 +157,7 @@ export async function fetchMarketFeed(): Promise<BlogPost[]> {
       itemContent,
       /<title><!\[CDATA\[(.*?)\]\]><\/title>|<title>(.*?)<\/title>/,
     ) || "Untitled";
-    const link = firstMatch(itemContent, /<link>(.*?)<\/link>/) || "#";
+    const link = withAffiliate(firstMatch(itemContent, /<link>(.*?)<\/link>/) || "#");
     const description = firstMatch(
       itemContent,
       /<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>|<description>([\s\S]*?)<\/description>/,
@@ -180,6 +193,10 @@ export async function fetchMarketFeed(): Promise<BlogPost[]> {
 
     index += 1;
     match = itemRegex.exec(xmlText);
+  }
+
+  if (posts.length === 0) {
+    throw new Error("RSS feed returned no items");
   }
 
   return posts.sort(

@@ -7,12 +7,17 @@ export function pageMetadata(input: {
   path: string;
 }): Metadata {
   const url = canonicalUrl(input.path);
+  const fullTitle = /\| Manzano Homes$/i.test(input.title)
+    ? input.title
+    : input.title.startsWith("Manzano Homes")
+      ? input.title
+      : `${input.title} | Manzano Homes`;
   return {
-    title: input.title,
+    title: { absolute: fullTitle },
     description: input.description,
     alternates: { canonical: url },
     openGraph: {
-      title: input.title,
+      title: fullTitle,
       description: input.description,
       url,
       siteName: SITE.name,
@@ -22,7 +27,7 @@ export function pageMetadata(input: {
     },
     twitter: {
       card: "summary_large_image",
-      title: input.title,
+      title: fullTitle,
       description: input.description,
       images: [canonicalUrl(SITE.ogImage)],
     },

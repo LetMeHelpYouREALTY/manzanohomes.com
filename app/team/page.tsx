@@ -1,6 +1,7 @@
+import CtaBand from "@/components/sections/CtaBand";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
 export const metadata = pageMetadata({
@@ -39,7 +40,6 @@ export default function TeamPage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Manzano Homes Team",
             description: metadata.description ?? "",
@@ -72,6 +72,7 @@ export default function TeamPage() {
           </article>
         ))}
       </section>
+      <CtaBand title="Talk with the Manzano Homes team" primaryLabel="Contact the office" />
     </>
   );
 }

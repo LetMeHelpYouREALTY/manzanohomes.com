@@ -28,6 +28,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={[localBusinessSchema(), websiteSchema()]} />
       </head>
       <body className="min-h-screen bg-white font-sans text-slate-900">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-800"
+        >
+          Skip to content
+        </a>
         <Header />
         <main id="main-content">{children}</main>
         <Footer />

@@ -1,7 +1,8 @@
 import MortgageCalculator from "@/components/tools/MortgageCalculator";
+import CtaBand from "@/components/sections/CtaBand";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 
 export const metadata = pageMetadata({
   title: "Mortgage Calculator | Manzano Peak Las Vegas 89121",
@@ -15,7 +16,6 @@ export default function MortgagePage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Mortgage Calculator",
             description: metadata.description ?? "",
@@ -34,6 +34,7 @@ export default function MortgagePage() {
       <section className="mx-auto max-w-4xl px-4 py-16">
         <MortgageCalculator />
       </section>
+      <CtaBand title="Want this payment run on a specific 89121 address?" />
     </>
   );
 }

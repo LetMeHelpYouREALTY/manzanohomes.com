@@ -5,16 +5,10 @@ import PageHero from "@/components/sections/PageHero";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import type { ZipMarketContent } from "@/lib/content/zips";
-import {
-  breadcrumbSchema,
-  faqSchema,
-  localBusinessSchema,
-  webPageSchema,
-} from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 
 export default function ZipMarketPage({ content }: { content: ZipMarketContent }) {
   const schemas = [
-    localBusinessSchema(),
     webPageSchema({
       name: content.h1,
       description: content.description,
@@ -76,7 +70,18 @@ export default function ZipMarketPage({ content }: { content: ZipMarketContent }
           items={content.schools}
           tone="slate"
         />
-      ) : null}
+      ) : (
+        <section className="bg-slate-50 py-16">
+          <div className="mx-auto max-w-4xl px-4">
+            <h2 className="text-3xl font-bold text-slate-900">School zoning in {content.zip}</h2>
+            <p className="mt-4 text-lg text-slate-700">
+              CCSD zoning is street-specific and can change. We pull the current assignment for the
+              exact address before you tour. Named campuses are not listed here because they vary
+              by street — enrollment is never guaranteed by proximity.
+            </p>
+          </div>
+        </section>
+      )}
 
       <InfoCardGrid title="Shopping and dining" items={content.shopping} tone="white" />
 

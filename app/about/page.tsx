@@ -5,7 +5,7 @@ import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, faqSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
 export const metadata = pageMetadata({
@@ -46,7 +46,6 @@ export default function AboutPage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "About Manzano Homes",
             description: metadata.description ?? "",

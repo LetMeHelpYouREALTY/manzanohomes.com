@@ -7,7 +7,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { fetchMarketFeed, LOCAL_POSTS, type BlogPost } from "@/lib/blog";
 import { contactFaqs } from "@/lib/content/shared-faqs";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, faqSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
 export const revalidate = 3600;
@@ -86,7 +86,6 @@ export default async function BlogPage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Manzano Peak Market Notes",
             description: metadata.description ?? "",

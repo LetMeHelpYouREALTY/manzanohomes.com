@@ -4,7 +4,7 @@ import PageHero from "@/components/sections/PageHero";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, faqSchema, howToSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, howToSchema, webPageSchema } from "@/lib/schema";
 
 export const metadata = pageMetadata({
   title: "Selling a Home in Manzano Peak | Las Vegas 89121",
@@ -79,7 +79,6 @@ export default function SellingGuidePage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Selling Your Manzano Home",
             description: metadata.description ?? "",

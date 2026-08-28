@@ -5,7 +5,7 @@ import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, faqSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
 export const metadata = pageMetadata({
@@ -33,7 +33,6 @@ export default function SpecialistPage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Manzano Peak Specialist Guide",
             description: metadata.description ?? "",
@@ -60,7 +59,7 @@ export default function SpecialistPage() {
             { title: "Walk Score 72", body: "Some errands on foot; most trips still use a car." },
           ].map((item) => (
             <article key={item.title} className="rounded-lg bg-slate-50 p-6">
-              <h2 className="text-xl font-bold text-slate-900">{item.title}</h2>
+              <p className="text-xl font-bold text-slate-900">{item.title}</p>
               <p className="mt-2 text-slate-600">{item.body}</p>
             </article>
           ))}

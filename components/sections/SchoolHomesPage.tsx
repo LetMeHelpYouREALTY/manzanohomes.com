@@ -3,7 +3,7 @@ import FaqSection from "@/components/sections/FaqSection";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
-import { breadcrumbSchema, faqSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 
 type SchoolHomesPageProps = {
   name: string;
@@ -39,7 +39,6 @@ export default function SchoolHomesPage({
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({ name: `Homes near ${name}`, description, path }),
           breadcrumbSchema([
             { name: "Home", url: "/" },

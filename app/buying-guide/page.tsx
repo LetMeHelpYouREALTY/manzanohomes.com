@@ -5,7 +5,7 @@ import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, faqSchema, howToSchema, localBusinessSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, howToSchema, webPageSchema } from "@/lib/schema";
 
 export const metadata = pageMetadata({
   title: "Las Vegas Buying Guide | Manzano Peak 89121",
@@ -127,7 +127,6 @@ export default function BuyingGuidePage() {
     <>
       <JsonLd
         data={[
-          localBusinessSchema(),
           webPageSchema({
             name: "Complete Home Buying Guide",
             description: metadata.description ?? "",
