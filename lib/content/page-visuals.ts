@@ -241,7 +241,7 @@ export const PAGE_VISUALS: Record<string, PageVisual> = {
     h3s: [plans, closing, hoa],
   }),
   "/team": visual({
-    h1: "Manzano Homes team | Las Vegas 89121 agents",
+    h1: "Manzano real estate agents in Las Vegas 89121",
     subtitle: "Dr. Jan Duffy, Eugene Boyle, and Chance Fuller · BHHS Nevada Properties",
     hero: {
       src: "/media/hero-team.jpg",
@@ -275,7 +275,7 @@ export const PAGE_VISUALS: Record<string, PageVisual> = {
     h3s: [plans, closing, highway],
   }),
   "/buying-guide": visual({
-    h1: "Las Vegas buying guide for Manzano Peak 89121",
+    h1: "How to buy a house in Las Vegas (Manzano Peak 89121)",
     subtitle: "Pre-approval, offer strategy, 10–15 day inspections, 30–45 day close",
     hero: {
       src: "/media/hero-buying.jpg",

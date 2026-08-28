@@ -15,9 +15,9 @@ const visual = getPageVisual("/");
 const hero = getHeroProps("/");
 
 export const metadata = pageMetadata({
-  title: "Manzano Homes | Las Vegas 89121 Real Estate | Expert Buying & Selling",
+  title: "Manzano Homes | Las Vegas 89121 Real Estate Agents",
   description:
-    "Manzano Peak and 89121 Las Vegas homes. Live MLS search, valuations, and tours with Dr. Jan Duffy, BHHS Nevada Properties. 3693 Manzano Peak Ave.",
+    "Manzano real estate agents for Las Vegas 89121. Live MLS search, home valuations, and same-week tours with Dr. Jan Duffy, BHHS Nevada Properties, at 3693 Manzano Peak Ave.",
   path: "/",
 });
 
