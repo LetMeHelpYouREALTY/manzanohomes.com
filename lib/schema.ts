@@ -3,6 +3,49 @@ import { SITE, canonicalUrl } from "./site";
 type JsonLd = Record<string, unknown>;
 
 const ORG_ID = `${SITE.url}/#organization`;
+const AGENT_ID = `${SITE.url}/#agent`;
+const WEBSITE_ID = `${SITE.url}/#website`;
+
+const OFFICE_ADDRESS = {
+  "@type": "PostalAddress",
+  streetAddress: SITE.address.street,
+  addressLocality: SITE.address.city,
+  addressRegion: SITE.address.region,
+  postalCode: SITE.address.postalCode,
+  addressCountry: SITE.address.country,
+} as const;
+
+export function personSchema(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": AGENT_ID,
+    name: SITE.agent,
+    jobTitle: "REALTOR®",
+    url: canonicalUrl("/about"),
+    telephone: SITE.phoneTel,
+    email: SITE.email,
+    image: canonicalUrl(SITE.ogImage),
+    address: OFFICE_ADDRESS,
+    worksFor: { "@id": ORG_ID },
+    hasCredential: {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "Real estate license",
+      identifier: SITE.license,
+      recognizedBy: {
+        "@type": "Organization",
+        name: "Nevada Real Estate Division",
+      },
+    },
+    knowsAbout: [
+      "Manzano Peak real estate",
+      "Las Vegas 89121 homes",
+      "89178 real estate",
+      "89179 real estate",
+      "89138 real estate",
+    ],
+  };
+}
 
 export function localBusinessSchema(): JsonLd {
   return {
@@ -17,14 +60,9 @@ export function localBusinessSchema(): JsonLd {
     telephone: SITE.phoneTel,
     email: SITE.email,
     priceRange: "$$",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: SITE.address.street,
-      addressLocality: SITE.address.city,
-      addressRegion: SITE.address.region,
-      postalCode: SITE.address.postalCode,
-      addressCountry: SITE.address.country,
-    },
+    currenciesAccepted: "USD",
+    hasMap: SITE.mapsUrl,
+    address: OFFICE_ADDRESS,
     geo: {
       "@type": "GeoCoordinates",
       latitude: SITE.geo.latitude,
@@ -36,18 +74,76 @@ export function localBusinessSchema(): JsonLd {
       opens: h.opens,
       closes: h.closes,
     })),
-    areaServed: {
-      "@type": "City",
-      name: "Las Vegas",
-      containedInPlace: { "@type": "State", name: "Nevada" },
-    },
-    employee: {
-      "@type": "Person",
-      name: SITE.agent,
-      jobTitle: "REALTOR®",
-      telephone: SITE.phoneTel,
-      email: SITE.email,
-    },
+    areaServed: [
+      {
+        "@type": "Place",
+        name: "Manzano Peak",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: SITE.address.city,
+          addressRegion: SITE.address.region,
+          postalCode: "89121",
+          addressCountry: SITE.address.country,
+        },
+      },
+      {
+        "@type": "Place",
+        name: "89121",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: SITE.address.city,
+          addressRegion: SITE.address.region,
+          postalCode: "89121",
+          addressCountry: SITE.address.country,
+        },
+      },
+      {
+        "@type": "Place",
+        name: "89178",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: SITE.address.city,
+          addressRegion: SITE.address.region,
+          postalCode: "89178",
+          addressCountry: SITE.address.country,
+        },
+      },
+      {
+        "@type": "Place",
+        name: "89179",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: SITE.address.city,
+          addressRegion: SITE.address.region,
+          postalCode: "89179",
+          addressCountry: SITE.address.country,
+        },
+      },
+      {
+        "@type": "Place",
+        name: "89138",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: SITE.address.city,
+          addressRegion: SITE.address.region,
+          postalCode: "89138",
+          addressCountry: SITE.address.country,
+        },
+      },
+      {
+        "@type": "City",
+        name: "Las Vegas",
+        containedInPlace: { "@type": "State", name: "Nevada" },
+      },
+    ],
+    knowsAbout: [
+      "Manzano Peak homes for sale",
+      "Las Vegas 89121 real estate",
+      "Home valuation",
+      "Buyer and seller representation",
+    ],
+    employee: { "@id": AGENT_ID },
+    founder: { "@id": AGENT_ID },
     parentOrganization: {
       "@type": "Organization",
       name: SITE.brokerage,
@@ -59,15 +155,13 @@ export function websiteSchema(): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": `${SITE.url}/#website`,
+    "@id": WEBSITE_ID,
     url: SITE.url,
     name: SITE.name,
+    description: SITE.description,
+    inLanguage: "en-US",
     publisher: { "@id": ORG_ID },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE.url}/homes-for-sale?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
+    about: { "@id": ORG_ID },
   };
 }
 
@@ -115,8 +209,9 @@ export function webPageSchema(input: {
     url: canonicalUrl(input.path),
     name: input.name,
     description: input.description,
-    isPartOf: { "@id": `${SITE.url}/#website` },
+    isPartOf: { "@id": WEBSITE_ID },
     about: { "@id": ORG_ID },
+    inLanguage: "en-US",
   };
 }
 

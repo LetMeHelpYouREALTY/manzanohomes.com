@@ -3,7 +3,7 @@ import CalendlyBadge from "@/components/calendly/CalendlyBadge";
 import Footer from "@/components/layouts/Footer";
 import Header from "@/components/layouts/Header";
 import JsonLd from "@/components/seo/JsonLd";
-import { localBusinessSchema, websiteSchema } from "@/lib/schema";
+import { localBusinessSchema, personSchema, websiteSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 import "./globals.css";
 
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <JsonLd data={[localBusinessSchema(), websiteSchema()]} />
+        <JsonLd data={[localBusinessSchema(), personSchema(), websiteSchema()]} />
       </head>
       <body className="min-h-screen bg-white font-sans text-slate-900">
         <a
