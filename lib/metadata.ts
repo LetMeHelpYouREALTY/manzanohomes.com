@@ -14,6 +14,11 @@ export function pageMetadata(input: {
     title: { absolute: fullTitle },
     description: input.description,
     alternates: { canonical: url },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true },
+    },
     openGraph: {
       title: fullTitle,
       description: input.description,

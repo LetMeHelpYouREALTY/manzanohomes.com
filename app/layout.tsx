@@ -24,10 +24,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <JsonLd data={[localBusinessSchema(), personSchema(), websiteSchema()]} />
-      </head>
       <body className="min-h-screen bg-white font-sans text-slate-900">
+        <JsonLd data={[localBusinessSchema(), personSchema(), websiteSchema()]} />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-800"
