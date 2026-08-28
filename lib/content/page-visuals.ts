@@ -213,12 +213,12 @@ export const PAGE_VISUALS: Record<string, PageVisual> = {
       src: "/media/hero-contact.jpg",
       alt: "Manzano Homes office reception in Las Vegas",
     },
-    h2: "Send a message or walk in during listed hours",
+    h2: "Book a Calendly time or walk in during listed hours",
     h2Body:
       "Dr. Jan Duffy, BHHS Nevada Properties, license S.0197614.LLC. Email DrDuffySells@ManzanoHomes.com. Same-business-day return during office hours.",
     h2Image: {
       src: "/media/h2-form.jpg",
-      alt: "Contact form on a tablet next to an office phone",
+      alt: "Laptop and office phone used to book a Manzano Homes appointment",
     },
     h3Heading: "How to reach the office",
     h3s: [airport, strip, grocery],
