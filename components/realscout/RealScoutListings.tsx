@@ -1,4 +1,5 @@
 import MlsDisclaimer from "@/components/realscout/MlsDisclaimer";
+import { RealScoutWhenVisible } from "@/components/realscout/RealScoutWhenVisible";
 import { SITE } from "@/lib/site";
 
 type RealScoutListingsProps = {
@@ -14,7 +15,9 @@ export default function RealScoutListings({
 
   return (
     <div>
-      <div className="realscout-listings" dangerouslySetInnerHTML={{ __html: html }} />
+      <RealScoutWhenVisible>
+        <div className="realscout-listings" dangerouslySetInnerHTML={{ __html: html }} />
+      </RealScoutWhenVisible>
       <MlsDisclaimer />
     </div>
   );

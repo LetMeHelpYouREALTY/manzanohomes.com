@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import CalendlyBadge from "@/components/calendly/CalendlyBadge";
 import Footer from "@/components/layouts/Footer";
 import Header from "@/components/layouts/Header";
@@ -27,7 +26,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <JsonLd data={[localBusinessSchema(), websiteSchema()]} />
-        <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css" />
       </head>
       <body className="min-h-screen bg-white font-sans text-slate-900">
         <a
@@ -40,14 +38,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main-content">{children}</main>
         <Footer />
         <CalendlyBadge />
-        <Script
-          src="https://assets.calendly.com/assets/external/widget.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          src="https://em.realscout.com/widgets/realscout-web-components.umd.js"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );

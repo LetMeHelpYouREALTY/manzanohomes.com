@@ -2,6 +2,7 @@
 
 import { assertCalendlyEvent, type CalendlyEvent } from "@/lib/calendly";
 import { openCalendlyPopup } from "@/lib/calendly-window";
+import { loadCalendly } from "@/lib/load-calendly";
 import { cn } from "@/lib/utils";
 
 type Variant = "primary" | "light" | "outline" | "header" | "footer";
@@ -33,6 +34,12 @@ export default function CalendlyPopupButton({
     <button
       type="button"
       className={cn(VARIANT_CLASS[variant], className)}
+      onMouseEnter={() => {
+        void loadCalendly();
+      }}
+      onFocus={() => {
+        void loadCalendly();
+      }}
       onClick={() => openCalendlyPopup(resolved)}
     >
       {label}

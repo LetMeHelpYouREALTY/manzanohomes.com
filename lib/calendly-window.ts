@@ -1,5 +1,6 @@
 import type { CalendlyEvent } from "@/lib/calendly";
 import { calendlyUrl } from "@/lib/calendly";
+import { loadCalendly } from "@/lib/load-calendly";
 
 type CalendlyApi = {
   initPopupWidget: (opts: { url: string }) => void;
@@ -21,9 +22,15 @@ declare global {
 
 export function openCalendlyPopup(event: CalendlyEvent = "conversation"): void {
   const url = calendlyUrl(event);
-  if (window.Calendly?.initPopupWidget) {
-    window.Calendly.initPopupWidget({ url });
-    return;
-  }
-  window.open(url, "_blank", "noopener,noreferrer");
+  void loadCalendly()
+    .then(() => {
+      if (window.Calendly?.initPopupWidget) {
+        window.Calendly.initPopupWidget({ url });
+        return;
+      }
+      window.open(url, "_blank", "noopener,noreferrer");
+    })
+    .catch(() => {
+      window.open(url, "_blank", "noopener,noreferrer");
+    });
 }

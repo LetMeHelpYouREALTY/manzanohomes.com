@@ -30,6 +30,8 @@ function PostCard({ post }: { post: BlogPost }) {
       alt={post.title}
       width={400}
       height={240}
+      quality={70}
+      sizes="(min-width: 768px) 400px, 100vw"
       className="h-48 w-full object-cover"
     />
   ) : (

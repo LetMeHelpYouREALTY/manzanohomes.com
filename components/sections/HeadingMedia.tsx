@@ -28,6 +28,8 @@ export default function HeadingMedia({
             alt={imageAlt}
             width={800}
             height={560}
+            quality={70}
+            sizes="(min-width: 1152px) 560px, (min-width: 768px) 45vw, 100vw"
             className="h-64 w-full rounded-xl object-cover md:h-80"
           />
         </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { assertCalendlyEvent, calendlyUrl, type CalendlyEvent } from "@/lib/calendly";
+import { loadCalendly } from "@/lib/load-calendly";
 import "@/lib/calendly-window";
 
 type CalendlyEmbedProps = {
@@ -20,20 +21,42 @@ export default function CalendlyEmbed({
   useEffect(() => {
     const node = containerRef.current;
     if (!node) return;
-    node.innerHTML = "";
 
-    function mount() {
-      if (!node || !window.Calendly?.initInlineWidget) return false;
-      window.Calendly.initInlineWidget({ url, parentElement: node });
-      return true;
+    let cancelled = false;
+    let started = false;
+
+    const start = () => {
+      if (started || cancelled) return;
+      started = true;
+      void loadCalendly().then(() => {
+        if (cancelled || !window.Calendly?.initInlineWidget) return;
+        node.innerHTML = "";
+        window.Calendly.initInlineWidget({ url, parentElement: node });
+      });
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      start();
+      return () => {
+        cancelled = true;
+        node.innerHTML = "";
+      };
     }
 
-    if (mount()) return undefined;
-    const timer = window.setInterval(() => {
-      if (mount()) window.clearInterval(timer);
-    }, 200);
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          io.disconnect();
+          start();
+        }
+      },
+      { rootMargin: "300px 0px" },
+    );
+    io.observe(node);
+
     return () => {
-      window.clearInterval(timer);
+      cancelled = true;
+      io.disconnect();
       node.innerHTML = "";
     };
   }, [url]);

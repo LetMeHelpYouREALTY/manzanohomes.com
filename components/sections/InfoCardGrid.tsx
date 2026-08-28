@@ -45,6 +45,8 @@ export default function InfoCardGrid({
                     alt={item.imageAlt ?? item.name}
                     width={640}
                     height={360}
+                    quality={70}
+                    sizes="(min-width: 1024px) 360px, (min-width: 768px) 45vw, 100vw"
                     className="-mx-6 -mt-6 mb-4 h-40 w-[calc(100%+3rem)] object-cover"
                   />
                 ) : null}

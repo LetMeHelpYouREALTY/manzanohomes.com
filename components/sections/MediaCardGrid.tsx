@@ -26,6 +26,8 @@ export default function MediaCardGrid({
                 alt={item.imageAlt}
                 width={640}
                 height={420}
+                quality={70}
+                sizes="(min-width: 1024px) 360px, (min-width: 768px) 45vw, 100vw"
                 className="h-44 w-full object-cover"
               />
               <div className="p-5">
