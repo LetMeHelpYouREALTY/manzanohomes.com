@@ -2,15 +2,18 @@ import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import InfoCardGrid from "@/components/sections/InfoCardGrid";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import type { ZipMarketContent } from "@/lib/content/zips";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 
 export default function ZipMarketPage({ content }: { content: ZipMarketContent }) {
+  const visual = getPageVisual(content.path);
   const schemas = [
     webPageSchema({
-      name: content.h1,
+      name: visual.h1,
       description: content.description,
       path: content.path,
     }),
@@ -24,7 +27,8 @@ export default function ZipMarketPage({ content }: { content: ZipMarketContent }
   return (
     <>
       <JsonLd data={schemas} />
-      <PageHero title={content.h1} subtitle={content.subtitle} imageAlt={content.imageAlt} />
+      <PageHero {...getHeroProps(content.path)} />
+      <PageVisualBlock path={content.path} />
 
       <section className="bg-white py-16">
         <div className="mx-auto max-w-4xl px-4">

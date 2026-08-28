@@ -1,14 +1,20 @@
 import MortgageCalculator from "@/components/tools/MortgageCalculator";
 import CtaBand from "@/components/sections/CtaBand";
+import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
+
+const path = "/mortgage-calculator";
+const visual = getPageVisual(path);
 
 export const metadata = pageMetadata({
   title: "Mortgage Calculator | Manzano Peak Las Vegas 89121",
   description:
     "Estimate monthly principal and interest for a Manzano Peak / 89121 home purchase. Taxes and HOA not included.",
-  path: "/mortgage-calculator",
+  path,
 });
 
 export default function MortgagePage() {
@@ -17,20 +23,18 @@ export default function MortgagePage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Mortgage Calculator",
+            name: visual.h1,
             description: metadata.description ?? "",
-            path: "/mortgage-calculator",
+            path,
           }),
           breadcrumbSchema([
             { name: "Home", url: "/" },
-            { name: "Mortgage Calculator", url: "/mortgage-calculator" },
+            { name: "Mortgage Calculator", url: path },
           ]),
         ]}
       />
-      <section className="bg-primary-800 px-4 pb-12 pt-28 text-center text-white">
-        <h1 className="text-4xl font-bold">Mortgage calculator</h1>
-        <p className="mt-3">Principal and interest only — verify taxes, insurance, and HOA separately.</p>
-      </section>
+      <PageHero {...getHeroProps(path)} />
+      <PageVisualBlock path={path} />
       <section className="mx-auto max-w-4xl px-4 py-16">
         <MortgageCalculator />
       </section>

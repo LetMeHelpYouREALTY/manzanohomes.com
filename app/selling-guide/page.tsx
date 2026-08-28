@@ -1,8 +1,10 @@
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, howToSchema, webPageSchema } from "@/lib/schema";
 
@@ -50,8 +52,8 @@ const sellingSteps = [
 ];
 
 const insights = [
-  { value: "28 days", metric: "Average days on market", note: "Recent 89121 pocket context" },
-  { value: "$485,000", metric: "Average list", note: "Verify on live MLS" },
+  { value: "32–46 days", metric: "ZIP days on market", note: "89121 2026 context — verify MLS" },
+  { value: "$315,000", metric: "ZIP median SFR", note: "Existing-home median, not a bid" },
   { value: "98.2%", metric: "List-to-sale ratio", note: "Pricing accuracy when we hit comps" },
   { value: "High", metric: "Showing activity", note: "Moves with rate news" },
 ];
@@ -80,7 +82,7 @@ export default function SellingGuidePage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Selling Your Manzano Home",
+            name: getPageVisual("/selling-guide").h1,
             description: metadata.description ?? "",
             path: "/selling-guide",
           }),
@@ -98,11 +100,8 @@ export default function SellingGuidePage() {
           }),
         ]}
       />
-      <PageHero
-        title="Selling your Manzano Peak home"
-        subtitle="Price from live 89121 comps, not last year's average"
-        imageAlt="Manzano Peak Las Vegas home staged for sale"
-      />
+      <PageHero {...getHeroProps("/selling-guide")} />
+      <PageVisualBlock path="/selling-guide" />
 
       <section className="bg-white py-16">
         <div className="mx-auto max-w-6xl px-4">

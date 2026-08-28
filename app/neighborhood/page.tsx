@@ -2,16 +2,21 @@ import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import InfoCardGrid from "@/components/sections/InfoCardGrid";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
+
+const path = "/neighborhood";
+const visual = getPageVisual(path);
 
 export const metadata = pageMetadata({
   title: "Manzano Neighborhood Las Vegas 89121 | Homes, Parks, Commute",
   description:
-    "Manzano neighborhood real estate in Southeast Las Vegas 89121. 150+ homes, $475K median list, 15-minute Strip commute, parks and named schools nearby.",
+    "Manzano neighborhood real estate in Southeast Las Vegas 89121. 150+ homes, 89121 ZIP median near $315K (verify MLS), 15-minute Strip commute, parks and named schools nearby.",
   path: "/neighborhood",
 });
 
@@ -35,9 +40,9 @@ export default function NeighborhoodPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Manzano Neighborhood, Las Vegas 89121",
+            name: visual.h1,
             description: metadata.description ?? "",
-            path: "/neighborhood",
+            path,
           }),
           breadcrumbSchema([
             { name: "Home", url: "/" },
@@ -46,11 +51,8 @@ export default function NeighborhoodPage() {
           faqSchema(faqs),
         ]}
       />
-      <PageHero
-        title="Manzano Neighborhood, Las Vegas 89121"
-        subtitle="150+ homes · $475K median list · 15 minutes to the Strip via I-515"
-        imageAlt="Manzano Peak homes and landscaping in Las Vegas 89121"
-      />
+      <PageHero {...getHeroProps(path)} />
+      <PageVisualBlock path={path} />
 
       <section className="bg-white py-16">
         <div className="mx-auto max-w-6xl px-4">
@@ -95,6 +97,8 @@ export default function NeighborhoodPage() {
             distance: "0.3 miles",
             description: "CCSD elementary 0.3 miles from the office pin.",
             href: "/homes-near-manzano-elementary",
+            image: "/media/hero-school-elem.jpg",
+            imageAlt: "Elementary campus exterior near Manzano Peak Las Vegas 89121",
           },
           {
             name: "Southeast Career Technical Academy",
@@ -102,6 +106,8 @@ export default function NeighborhoodPage() {
             distance: "1.2 miles",
             description: "Career and technical campus 1.2 miles from Manzano Peak.",
             href: "/homes-near-southeast-career-technical-academy",
+            image: "/media/hero-school-secta.jpg",
+            imageAlt: "Southeast Career Technical Academy campus in Las Vegas 89120",
           },
           {
             name: "Green Valley High School",
@@ -109,6 +115,8 @@ export default function NeighborhoodPage() {
             distance: "2.1 miles",
             description: "Henderson high school 2.1 miles from Manzano Peak.",
             href: "/homes-near-green-valley-high-school",
+            image: "/media/hero-school-hs.jpg",
+            imageAlt: "Henderson Nevada high school campus exterior",
           },
         ]}
         tone="white"
@@ -122,18 +130,24 @@ export default function NeighborhoodPage() {
             type: "Entertainment & shopping",
             distance: "3.2 miles",
             description: "Resort retail, dining, and entertainment.",
+            image: "/media/h3-shopping.jpg",
+            imageAlt: "Open-air shopping plaza with palms in the Las Vegas valley",
           },
           {
             name: "The District at Green Valley Ranch",
             type: "Shopping center",
             distance: "3.5 miles",
             description: "Open-air restaurants and retail.",
+            image: "/media/h3-grocery.jpg",
+            imageAlt: "Grocery and retail interior typical of southeast Las Vegas",
           },
           {
             name: "Henderson Pavilion",
             type: "Outdoor venue",
             distance: "4.1 miles",
             description: "Amphitheater for concerts and events.",
+            image: "/media/h3-strip.jpg",
+            imageAlt: "Las Vegas valley venue lighting at dusk",
           },
         ]}
         tone="slate"
@@ -147,18 +161,24 @@ export default function NeighborhoodPage() {
             type: "Neighborhood park",
             distance: "0.1 miles",
             features: ["Playground", "Walking trails", "Picnic areas", "Basketball court"],
+            image: "/media/h3-park.jpg",
+            imageAlt: "Pocket park with playground and walking path in southeast Las Vegas 89121",
           },
           {
             name: "Sunset Park",
             type: "Regional park",
             distance: "2.8 miles",
             features: ["Lake", "Walking trails", "Sports fields", "Dog park"],
+            image: "/media/h3-park.jpg",
+            imageAlt: "Regional park walking path in Las Vegas",
           },
           {
             name: "Coronado Park",
             type: "Community park",
             distance: "1.5 miles",
             features: ["Tennis courts", "Soccer fields", "Playground", "Walking paths"],
+            image: "/media/h3-park.jpg",
+            imageAlt: "Community park fields in southeast Las Vegas",
           },
         ]}
         tone="white"
@@ -191,8 +211,8 @@ export default function NeighborhoodPage() {
           </p>
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
             {[
-              { value: "$485K", label: "Average list" },
-              { value: "$475K", label: "Median list" },
+              { value: "$316K+", label: "Vales builder from (verify)" },
+              { value: "$315K", label: "89121 ZIP median SFR" },
               { value: "$185", label: "Approx. $/sq ft" },
               { value: "28", label: "Days on market" },
               { value: "+3.2%", label: "Recent price change" },

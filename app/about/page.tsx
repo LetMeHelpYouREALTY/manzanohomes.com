@@ -1,12 +1,17 @@
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
+
+const path = "/about";
+const visual = getPageVisual(path);
 
 export const metadata = pageMetadata({
   title: "About Manzano Homes | Las Vegas Real Estate | 89121",
@@ -47,9 +52,9 @@ export default function AboutPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "About Manzano Homes",
+            name: visual.h1,
             description: metadata.description ?? "",
-            path: "/about",
+            path,
           }),
           breadcrumbSchema([
             { name: "Home", url: "/" },
@@ -58,11 +63,8 @@ export default function AboutPage() {
           faqSchema(contactFaqs),
         ]}
       />
-      <PageHero
-        title="About Manzano Homes"
-        subtitle={`Dr. Jan Duffy · ${SITE.brokerage} · License# ${SITE.license}`}
-        imageAlt="Manzano Homes Las Vegas office area near Manzano Peak Ave"
-      />
+      <PageHero {...getHeroProps(path)} />
+      <PageVisualBlock path={path} />
 
       <section className="bg-white py-16">
         <div className="mx-auto max-w-4xl px-4 text-center">

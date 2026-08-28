@@ -18,9 +18,9 @@ export const PAGES: Record<string, MarketingContent> = {
     path: "/neighborhood",
     title: "Manzano Neighborhood Las Vegas 89121 | Homes, Parks, Commute",
     description:
-      "Manzano neighborhood real estate in Southeast Las Vegas 89121. 150+ homes, $475K median, 15-minute Strip commute, parks and named schools nearby.",
-    h1: "Manzano Neighborhood, Las Vegas 89121",
-    subtitle: "150+ homes · $475K median · 15 minutes to the Strip via I-515",
+      "Manzano neighborhood real estate in Southeast Las Vegas 89121. 150+ homes, 89121 ZIP median near $315K (verify MLS), 15-minute Strip commute, parks and named schools nearby.",
+    h1: "Manzano neighborhood real estate, Las Vegas 89121",
+    subtitle: "Southeast valley pocket around 3693 Manzano Peak Ave — parks, named campuses, I-515",
     imageAlt: "Manzano Peak homes and landscaping in Las Vegas 89121",
     paragraphs: [
       "Manzano sits in Southeast Las Vegas zip 89121, about 12 miles from the Strip and 10 minutes from Harry Reid International Airport via I-515 and I-215.",
@@ -29,7 +29,7 @@ export const PAGES: Record<string, MarketingContent> = {
     ],
     stats: [
       { value: "150+", label: "Homes in Manzano Peak" },
-      { value: "$475K", label: "Median list (verify MLS)" },
+      { value: "$315K", label: "ZIP median SFR (verify MLS)" },
       { value: "15 min", label: "Drive to the Strip" },
       { value: "89121", label: "Zip code" },
     ],
@@ -53,8 +53,8 @@ export const PAGES: Record<string, MarketingContent> = {
     title: "Manzano Peak Neighborhood Las Vegas | 89121 Real Estate",
     description:
       "Manzano Peak neighborhood in Las Vegas 89121: modern homes, named schools, parks, and $350K–$750K list bands. Tour with Dr. Jan Duffy.",
-    h1: "Manzano Peak Neighborhood",
-    subtitle: "Southeast Las Vegas 89121 · 150+ homes · $485K average list",
+    h1: "Manzano Peak neighborhood | 2015-era 89121 homes",
+    subtitle: "Vales and Glades at Manzano — new construction and resale on the same streets",
     imageAlt: "Street view of Manzano Peak neighborhood Las Vegas homes",
     paragraphs: [
       "Manzano Peak is a 2015-era pocket of 150+ homes in 89121. Inventory mixes single-family houses, townhomes, and newer construction.",
@@ -62,7 +62,7 @@ export const PAGES: Record<string, MarketingContent> = {
       `Office and listing tours start at ${SITE.address.street}. Call ${SITE.phoneDisplay} to walk a floor plan this week.`,
     ],
     stats: [
-      { value: "$485K", label: "Average list" },
+      { value: "$316K+", label: "Vales from (verify)" },
       { value: "72", label: "Walk Score" },
       { value: "12 mi", label: "To the Strip" },
       { value: "2015+", label: "Build years" },
@@ -71,7 +71,7 @@ export const PAGES: Record<string, MarketingContent> = {
       {
         question: "What is the median home price in Manzano Peak?",
         answer:
-          "Recent median list is about $475,000, with a $350,000–$750,000 band. Live MLS prices still beat any web snippet.",
+          "Recent 89121 ZIP medians for existing homes clustered near $315,000. KB Home lists Vales at Manzano from about $315,990. Live MLS prices still beat any web snippet.",
       },
       {
         question: "How far is Manzano Peak from the Las Vegas Strip?",
@@ -191,12 +191,12 @@ export const PAGES: Record<string, MarketingContent> = {
     title: "Home Valuation | Manzano Peak Las Vegas 89121",
     description:
       "Request a Manzano Peak / 89121 home valuation from Dr. Jan Duffy. Live widget plus a human pricing call.",
-    h1: "89121 Home Valuation",
-    subtitle: "Instant widget, then a human pricing call on your street",
-    imageAlt: "Home valuation for Manzano Peak Las Vegas property",
+    h1: "89121 home valuation for Manzano Peak",
+    subtitle: "Widget first pass, then a human pricing call on your street",
+    imageAlt: "Kitchen island with keys and tablet used for a home valuation",
     paragraphs: [
       "Use the RealScout widget for a first pass, then we reconcile with the last 90 days of solds on Manzano Peak Ave and adjacent streets.",
-      "Automated values miss HOA, upgrades, and lot quirks. That is why the call still matters.",
+      "Automated values miss HOA, upgrades, and lot quirks. ZIP-wide medians near $315,000 in 2026 do not price a specific plan. That is why the call still matters.",
     ],
     faqs: contactFaq,
     showForm: true,
@@ -297,8 +297,8 @@ export const PAGES: Record<string, MarketingContent> = {
     title: "Privacy Policy | Manzano Homes",
     description:
       "Privacy policy for ManzanoHomes.com: how Manzano Homes handles contact-form, valuation, and listing-alert data.",
-    h1: "Privacy Policy",
-    subtitle: "How Manzano Homes handles contact-form and listing-alert data",
+    h1: "Privacy policy for ManzanoHomes.com",
+    subtitle: "How contact-form, valuation, and listing-alert data is used",
     imageAlt: "Manzano Homes Las Vegas privacy information",
     paragraphs: [
       "Manzano Homes collects name, email, phone, and message content when you submit a form or request a valuation.",
@@ -312,8 +312,8 @@ export const PAGES: Record<string, MarketingContent> = {
     path: "/terms-of-service",
     title: "Terms of Service | Manzano Homes",
     description: "Terms of use for ManzanoHomes.com, listings widgets, and market content.",
-    h1: "Terms of Service",
-    subtitle: "MLS widgets, estimates, and site use",
+    h1: "Terms of service | ManzanoHomes.com listings",
+    subtitle: "MLS widgets, estimates, and site use for Las Vegas 89121",
     imageAlt: "Manzano Homes Las Vegas terms of service",
     paragraphs: [
       "Listing data is supplied by third-party MLS widgets and may lag the live market. Confirm every number before you offer.",
@@ -326,8 +326,8 @@ export const PAGES: Record<string, MarketingContent> = {
     path: "/disclaimer",
     title: "MLS Disclaimer | Manzano Homes",
     description: "MLS and brokerage disclaimer for ManzanoHomes.com listings and market figures.",
-    h1: "Disclaimer",
-    subtitle: "Listing attribution and estimate limits",
+    h1: "MLS disclaimer | Manzano Homes Las Vegas",
+    subtitle: "Listing attribution, estimate limits, and Equal Housing Opportunity",
     imageAlt: "Manzano Homes Las Vegas MLS disclaimer",
     paragraphs: [
       "RealScout and MLS content is for consumers' personal, non-commercial use. It may not be copied or redistributed.",
@@ -340,8 +340,8 @@ export const PAGES: Record<string, MarketingContent> = {
     path: "/accessibility",
     title: "Accessibility | Manzano Homes",
     description: "Accessibility statement for ManzanoHomes.com. Request an alternate format.",
-    h1: "Accessibility",
-    subtitle: "We aim for WCAG-minded pages; tell us if something blocks you",
+    h1: "Accessibility at ManzanoHomes.com",
+    subtitle: "Request an alternate format if a form, widget, or map blocks you",
     imageAlt: "Manzano Homes Las Vegas accessibility statement",
     paragraphs: [
       `If a form, widget, or map blocks you, email ${SITE.email} or call ${SITE.phoneDisplay} and we will provide the same information another way.`,

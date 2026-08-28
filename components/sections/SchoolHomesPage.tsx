@@ -1,8 +1,11 @@
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
+import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 
 type SchoolHomesPageProps = {
@@ -22,6 +25,7 @@ export default function SchoolHomesPage({
   path,
   description,
 }: SchoolHomesPageProps) {
+  const visual = getPageVisual(path);
   const faqs = [
     {
       question: `How far is ${name} from Manzano Peak?`,
@@ -39,27 +43,23 @@ export default function SchoolHomesPage({
     <>
       <JsonLd
         data={[
-          webPageSchema({ name: `Homes near ${name}`, description, path }),
+          webPageSchema({ name: visual.h1, description, path }),
           breadcrumbSchema([
             { name: "Home", url: "/" },
-            { name: `Homes near ${name}`, url: path },
+            { name: visual.h1, url: path },
           ]),
           faqSchema(faqs),
         ]}
       />
-      <section className="bg-primary-800 px-4 pb-12 pt-28 text-center text-white">
-        <h1 className="text-4xl font-bold">Homes near {name}</h1>
-        <p className="mt-3">
-          {type} · {distance} · {address}
-        </p>
-      </section>
+      <PageHero {...getHeroProps(path)} />
       <section className="mx-auto max-w-3xl px-4 py-12">
         <p className="text-lg text-slate-700">{description}</p>
         <p className="mt-4 text-slate-600">
-          Use the live MLS widget for today&apos;s inventory, then we confirm commute time and the
-          current CCSD assignment for the street you actually bid on.
+          {type} · {distance} · {address}. Use the live MLS widget for today&apos;s inventory, then we
+          confirm commute time and the current CCSD assignment for the street you actually bid on.
         </p>
       </section>
+      <PageVisualBlock path={path} />
       <section className="mx-auto max-w-6xl px-4 pb-16">
         <RealScoutListings />
       </section>

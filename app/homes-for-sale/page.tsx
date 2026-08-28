@@ -1,16 +1,22 @@
 import Link from "next/link";
 import CtaBand from "@/components/sections/CtaBand";
+import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutSearch from "@/components/realscout/RealScoutSearch";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import JsonLd from "@/components/seo/JsonLd";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
+
+const path = "/homes-for-sale";
+const visual = getPageVisual(path);
 
 export const metadata = pageMetadata({
   title: "Homes for Sale in Manzano Peak | Las Vegas 89121 MLS",
   description:
     "Search live MLS homes for sale in Manzano Peak and Las Vegas 89121. Filter by price, beds, and property type.",
-  path: "/homes-for-sale",
+  path,
 });
 
 const zipLinks = [
@@ -26,20 +32,18 @@ export default function HomesForSalePage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Homes for Sale in Manzano Peak",
+            name: visual.h1,
             description: metadata.description ?? "",
-            path: "/homes-for-sale",
+            path,
           }),
           breadcrumbSchema([
             { name: "Home", url: "/" },
-            { name: "Homes for Sale", url: "/homes-for-sale" },
+            { name: "Homes for Sale", url: path },
           ]),
         ]}
       />
-      <section className="bg-primary-800 px-4 pb-12 pt-28 text-center text-white">
-        <h1 className="text-4xl font-bold">Homes for Sale in Manzano Peak</h1>
-        <p className="mt-3 text-lg">Live MLS search for Las Vegas 89121 and nearby streets.</p>
-      </section>
+      <PageHero {...getHeroProps(path)} />
+      <PageVisualBlock path={path} />
       <section className="mx-auto max-w-6xl space-y-10 px-4 py-12">
         <div className="flex flex-wrap justify-center gap-3">
           {zipLinks.map((link) => (

@@ -3,9 +3,11 @@ import Link from "next/link";
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import PageHero from "@/components/sections/PageHero";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
 import { fetchMarketFeed, LOCAL_POSTS, type BlogPost } from "@/lib/blog";
 import { contactFaqs } from "@/lib/content/shared-faqs";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
@@ -87,7 +89,7 @@ export default async function BlogPage() {
       <JsonLd
         data={[
           webPageSchema({
-            name: "Manzano Peak Market Notes",
+            name: getPageVisual("/blog").h1,
             description: metadata.description ?? "",
             path: "/blog",
           }),
@@ -98,11 +100,8 @@ export default async function BlogPage() {
           faqSchema(contactFaqs),
         ]}
       />
-      <PageHero
-        title="Real estate insights blog"
-        subtitle="89121 market notes, buying steps, and listing alerts"
-        imageAlt="Manzano Peak Las Vegas real estate market notes"
-      />
+      <PageHero {...getHeroProps("/blog")} />
+      <PageVisualBlock path="/blog" />
 
       <section className="bg-white py-8">
         <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3 px-4">

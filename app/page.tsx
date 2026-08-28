@@ -3,10 +3,15 @@ import Link from "next/link";
 import ContactForm from "@/components/forms/ContactForm";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import FaqSection from "@/components/sections/FaqSection";
+import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
+import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
+
+const visual = getPageVisual("/");
+const hero = getHeroProps("/");
 
 export const metadata = pageMetadata({
   title: "Manzano Homes | Las Vegas 89121 Real Estate | Expert Buying & Selling",
@@ -26,32 +31,13 @@ const faqs = [
   },
 ];
 
-const highlights = [
-  {
-    title: "Prime location",
-    body: "I-515 and I-215, 12 miles from the Strip, 10 minutes to Harry Reid International.",
-  },
-  {
-    title: "Named schools nearby",
-    body: "Manzano Elementary 0.3 miles, SECTA 1.2 miles, Green Valley High 2.1 miles.",
-  },
-  {
-    title: "2015-era plans",
-    body: "1,500–3,500 sq ft with attached garages in the Manzano Peak pocket.",
-  },
-  {
-    title: "Parks in walking distance",
-    body: "Manzano Park 0.1 miles: playground, trails, picnic tables, basketball court.",
-  },
-];
-
 export default function HomePage() {
   return (
     <>
       <JsonLd
         data={[
           webPageSchema({
-            name: "Manzano Homes Las Vegas",
+            name: visual.h1,
             description: SITE.description,
             path: "/",
           }),
@@ -62,8 +48,8 @@ export default function HomePage() {
 
       <section className="relative overflow-hidden pt-24 text-white md:pt-32">
         <Image
-          src="/hero-manzano.jpg"
-          alt="Manzano Peak neighborhood homes in Las Vegas 89121"
+          src={hero.imageSrc}
+          alt={hero.imageAlt}
           fill
           priority
           className="object-cover"
@@ -74,13 +60,8 @@ export default function HomePage() {
           <p className="mb-3 text-sm uppercase tracking-wide text-primary-200">
             {SITE.address.street} · {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}
           </p>
-          <h1 className="text-4xl font-bold md:text-6xl">
-            Las Vegas homes in Manzano Peak, 89121
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/90">
-            Live MLS search, same-week tours, and pricing from current comps — not last year&apos;s
-            average.
-          </p>
+          <h1 className="text-4xl font-bold md:text-6xl">{visual.h1}</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/90">{visual.subtitle}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <span className="rounded-full bg-white/20 px-4 py-2 text-sm">Live MLS</span>
             <span className="rounded-full bg-white/20 px-4 py-2 text-sm">Same-week tours</span>
@@ -117,6 +98,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <PageVisualBlock path="/" />
+
       <section className="bg-white py-16">
         <div className="mx-auto grid max-w-6xl gap-6 px-4 md:grid-cols-3">
           {[
@@ -143,25 +126,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-white py-16">
-        <div className="mx-auto max-w-6xl px-4">
-          <h2 className="mb-10 text-center text-3xl font-bold text-slate-900">Why Manzano Peak</h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {highlights.map((item) => (
-              <article key={item.title} className="text-center">
-                <h3 className="text-xl font-semibold text-slate-900">{item.title}</h3>
-                <p className="mt-2 text-slate-600">{item.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="bg-primary-700 py-12 text-white">
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 text-center md:grid-cols-3">
           <div>
-            <div className="text-4xl font-bold">$485K</div>
-            <div className="text-primary-100">Median list (verify MLS)</div>
+            <div className="text-4xl font-bold">$315K</div>
+            <div className="text-primary-100">ZIP median SFR (verify MLS)</div>
           </div>
           <div>
             <div className="text-4xl font-bold">15 min</div>
