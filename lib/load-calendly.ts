@@ -46,25 +46,3 @@ export function loadCalendly() {
   }
   return calendlyPromise;
 }
-
-export function scheduleCalendlyIdleLoad() {
-  if (typeof window === "undefined") return;
-
-  const start = () => {
-    void loadCalendly();
-  };
-
-  const afterLoad = () => {
-    if (typeof window.requestIdleCallback === "function") {
-      window.requestIdleCallback(start, { timeout: 4000 });
-      return;
-    }
-    window.setTimeout(start, 2500);
-  };
-
-  if (document.readyState === "complete") {
-    afterLoad();
-    return;
-  }
-  window.addEventListener("load", afterLoad, { once: true });
-}

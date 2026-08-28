@@ -1,40 +1,22 @@
 "use client";
 
-import { useEffect } from "react";
-import { calendlyUrl } from "@/lib/calendly";
-import { scheduleCalendlyIdleLoad } from "@/lib/load-calendly";
-import "@/lib/calendly-window";
+import { openCalendlyPopup } from "@/lib/calendly-window";
+import { loadCalendly } from "@/lib/load-calendly";
 
 export default function CalendlyBadge() {
-  useEffect(() => {
-    let cancelled = false;
-
-    function mount() {
-      if (document.querySelector(".calendly-badge-widget")) return;
-      if (!window.Calendly?.initBadgeWidget) return;
-      window.Calendly.initBadgeWidget({
-        url: calendlyUrl("conversation"),
-        text: "Schedule time with me",
-        color: "#0284c7",
-        textColor: "#ffffff",
-        branding: false,
-      });
-    }
-
-    scheduleCalendlyIdleLoad();
-    const timer = window.setInterval(() => {
-      if (cancelled) return;
-      if (window.Calendly?.initBadgeWidget) {
-        mount();
-        window.clearInterval(timer);
-      }
-    }, 400);
-
-    return () => {
-      cancelled = true;
-      window.clearInterval(timer);
-    };
-  }, []);
-
-  return null;
+  return (
+    <button
+      type="button"
+      className="fixed bottom-4 right-4 z-50 rounded-full bg-primary-600 px-4 py-3 text-sm font-semibold text-white shadow-lg hover:bg-primary-500"
+      onMouseEnter={() => {
+        void loadCalendly();
+      }}
+      onFocus={() => {
+        void loadCalendly();
+      }}
+      onClick={() => openCalendlyPopup("conversation")}
+    >
+      Schedule time with me
+    </button>
+  );
 }

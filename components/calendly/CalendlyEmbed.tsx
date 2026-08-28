@@ -24,14 +24,31 @@ export default function CalendlyEmbed({
 
     let cancelled = false;
     let started = false;
+    let pollTimer: number | undefined;
+    let stopTimer: number | undefined;
 
     const start = () => {
       if (started || cancelled) return;
       started = true;
       void loadCalendly().then(() => {
-        if (cancelled || !window.Calendly?.initInlineWidget) return;
-        node.innerHTML = "";
-        window.Calendly.initInlineWidget({ url, parentElement: node });
+        const tryInit = () => {
+          if (cancelled) return true;
+          if (!window.Calendly?.initInlineWidget) return false;
+          if (!node.querySelector("iframe")) {
+            window.Calendly.initInlineWidget({ url, parentElement: node });
+          }
+          return true;
+        };
+
+        if (tryInit()) return;
+        pollTimer = window.setInterval(() => {
+          if (tryInit()) {
+            if (pollTimer) window.clearInterval(pollTimer);
+          }
+        }, 150);
+        stopTimer = window.setTimeout(() => {
+          if (pollTimer) window.clearInterval(pollTimer);
+        }, 8000);
       });
     };
 
@@ -39,7 +56,8 @@ export default function CalendlyEmbed({
       start();
       return () => {
         cancelled = true;
-        node.innerHTML = "";
+        if (pollTimer) window.clearInterval(pollTimer);
+        if (stopTimer) window.clearTimeout(stopTimer);
       };
     }
 
@@ -50,21 +68,22 @@ export default function CalendlyEmbed({
           start();
         }
       },
-      { rootMargin: "300px 0px" },
+      { rootMargin: "400px 0px" },
     );
     io.observe(node);
 
     return () => {
       cancelled = true;
       io.disconnect();
-      node.innerHTML = "";
+      if (pollTimer) window.clearInterval(pollTimer);
+      if (stopTimer) window.clearTimeout(stopTimer);
     };
   }, [url]);
 
   return (
     <div
       ref={containerRef}
-      className="calendly-inline-widget overflow-hidden rounded-xl bg-white"
+      className="overflow-hidden rounded-xl border border-slate-200 bg-white"
       style={{ minWidth: 320, height }}
       data-calendly-event={resolved}
     />

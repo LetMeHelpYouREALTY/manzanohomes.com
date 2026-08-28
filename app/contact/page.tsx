@@ -82,6 +82,9 @@ export default function ContactPage() {
             <p className="mb-6 text-slate-600">
               Calendly books the slot. Call {SITE.phoneDisplay} if you need a same-hour callback.
             </p>
+            <div className="mb-6">
+              <CalendlyPopupButton event="conversation" label="Book a time" />
+            </div>
             <CalendlyEmbed event="conversation" />
           </div>
           <div className="space-y-6">
