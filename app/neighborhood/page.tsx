@@ -2,6 +2,7 @@ import Link from "next/link";
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import InfoCardGrid from "@/components/sections/InfoCardGrid";
+import NearbyAmenitiesSection from "@/components/sections/NearbyAmenitiesSection";
 import PageHero from "@/components/sections/PageHero";
 import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
@@ -78,6 +79,8 @@ export default function NeighborhoodPage() {
           </div>
         </div>
       </section>
+
+      <NearbyAmenitiesSection tone="white" />
 
       <section className="bg-slate-50 py-16">
         <div className="mx-auto max-w-6xl px-4">

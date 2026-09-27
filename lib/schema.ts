@@ -264,6 +264,65 @@ export function howToSchema(input: {
 
 type EmploymentType = "FULL_TIME" | "PART_TIME";
 
+type SchemaPlaceItem = {
+  name: string;
+  schemaType: string;
+  streetAddress: string;
+  locality: string;
+  region: string;
+  postalCode: string;
+};
+
+export function communityPlaceSchema(input: {
+  name: string;
+  latitude: number;
+  longitude: number;
+  streetAddress: string;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Place",
+    name: input.name,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: input.latitude,
+      longitude: input.longitude,
+    },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: input.streetAddress,
+      addressLocality: SITE.address.city,
+      addressRegion: SITE.address.region,
+      postalCode: SITE.address.postalCode,
+      addressCountry: SITE.address.country,
+    },
+  };
+}
+
+export function nearbyPlacesItemListSchema(places: SchemaPlaceItem[]): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Featured places near Manzano Peak",
+    itemListElement: places.map((place, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": place.schemaType,
+        name: place.name,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: place.streetAddress,
+          addressLocality: place.locality,
+          addressRegion: place.region,
+          postalCode: place.postalCode,
+          addressCountry: SITE.address.country,
+        },
+      },
+    })),
+  };
+}
+
 export function jobPostingSchema(input: {
   title: string;
   description: string;

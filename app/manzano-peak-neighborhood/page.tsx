@@ -1,6 +1,7 @@
 import CtaBand from "@/components/sections/CtaBand";
 import FaqSection from "@/components/sections/FaqSection";
 import InfoCardGrid from "@/components/sections/InfoCardGrid";
+import NearbyAmenitiesSection from "@/components/sections/NearbyAmenitiesSection";
 import PageHero from "@/components/sections/PageHero";
 import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
@@ -65,6 +66,8 @@ export default function ManzanoPeakPage() {
           </p>
         </div>
       </section>
+
+      <NearbyAmenitiesSection />
 
       <section className="bg-slate-900 py-12 text-white">
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-4 md:grid-cols-4">
