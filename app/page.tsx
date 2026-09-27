@@ -4,6 +4,7 @@ import CalendlyPopupButton from "@/components/calendly/CalendlyPopupButton";
 import CalendlySection from "@/components/calendly/CalendlySection";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
 import FaqSection from "@/components/sections/FaqSection";
+import NearbyAmenitiesSection from "@/components/sections/NearbyAmenitiesSection";
 import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import JsonLd from "@/components/seo/JsonLd";
 import { getHeroProps, getPageVisual } from "@/lib/content/page-visuals";
@@ -122,6 +123,11 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <NearbyAmenitiesSection
+        title="What's nearby Manzano Peak"
+        subtitle="Explore groceries, parks, schools, and healthcare around 89121 — then open the full amenities guide."
+      />
 
       <section className="bg-slate-50 py-16">
         <div className="mx-auto max-w-6xl px-4">

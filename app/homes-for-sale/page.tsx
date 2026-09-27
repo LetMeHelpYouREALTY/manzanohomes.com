@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CtaBand from "@/components/sections/CtaBand";
 import PageHero from "@/components/sections/PageHero";
+import NearbyAmenitiesSection from "@/components/sections/NearbyAmenitiesSection";
 import PageVisualBlock from "@/components/sections/PageVisualBlock";
 import RealScoutSearch from "@/components/realscout/RealScoutSearch";
 import RealScoutListings from "@/components/realscout/RealScoutListings";
@@ -44,6 +45,11 @@ export default function HomesForSalePage() {
       />
       <PageHero {...getHeroProps(path)} />
       <PageVisualBlock path={path} />
+      <NearbyAmenitiesSection
+        title="What's near your short list"
+        subtitle="Filter groceries, parks, and schools before you tour Manzano Peak listings."
+        tone="white"
+      />
       <section className="mx-auto max-w-6xl space-y-10 px-4 py-12">
         <div className="flex flex-wrap justify-center gap-3">
           {zipLinks.map((link) => (

@@ -13,11 +13,11 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://em.realscout.com https://www.realscout.com https://www.googletagmanager.com https://assets.calendly.com https://calendly.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://em.realscout.com https://www.realscout.com https://www.googletagmanager.com https://assets.calendly.com https://calendly.com https://maps.googleapis.com",
               "style-src 'self' 'unsafe-inline' https://em.realscout.com https://www.realscout.com https://assets.calendly.com",
               "img-src 'self' data: blob: https:",
               "font-src 'self' data: https://assets.calendly.com",
-              "connect-src 'self' https://em.realscout.com https://www.realscout.com https://www.google-analytics.com https://calendly.com https://api.calendly.com https://*.calendly.com",
+              "connect-src 'self' https://em.realscout.com https://www.realscout.com https://www.google-analytics.com https://calendly.com https://api.calendly.com https://*.calendly.com https://maps.googleapis.com https://maps.gstatic.com https://places.googleapis.com",
               "frame-src 'self' https://em.realscout.com https://www.realscout.com https://www.google.com https://maps.google.com https://*.google.com https://calendly.com https://*.calendly.com",
             ].join("; "),
           },

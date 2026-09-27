@@ -18,8 +18,8 @@ export const SITE = {
     country: "US",
   },
   geo: {
-    latitude: 36.0839,
-    longitude: -115.0891,
+    latitude: 36.14074,
+    longitude: -115.09437,
   },
   hours: [
     { day: "Monday", opens: "09:00", closes: "18:00" },
@@ -50,6 +50,7 @@ export const NAV_ITEMS = [
   { href: "/neighborhood", label: "Neighborhood" },
   { href: "/homes-for-sale", label: "Homes for Sale" },
   { href: "/home-valuation", label: "Home Valuation" },
+  { href: "/nearby-amenities", label: "Nearby Amenities" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
@@ -64,6 +65,7 @@ export const FOOTER_LINKS = {
     { href: "/homes-for-sale", label: "Homes for Sale" },
     { href: "/home-valuation", label: "Home Valuation" },
     { href: "/neighborhood", label: "Neighborhood Info" },
+    { href: "/nearby-amenities", label: "Nearby Amenities" },
     { href: "/mortgage-calculator", label: "Mortgage Calculator" },
   ],
   resources: [
@@ -87,6 +89,7 @@ export const SITE_ROUTES = [
   "/",
   "/homes-for-sale",
   "/neighborhood",
+  "/nearby-amenities",
   "/manzano-peak-neighborhood",
   "/manzano-specialist",
   "/3693-manzano-peak-ave",

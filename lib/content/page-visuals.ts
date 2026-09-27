@@ -563,6 +563,23 @@ export const PAGE_VISUALS: Record<string, PageVisual> = {
     h3Heading: "Around SECTA",
     h3s: [highway, plans, grocery],
   }),
+  "/nearby-amenities": visual({
+    h1: "Nearby amenities in Manzano Peak, Las Vegas",
+    subtitle: "Groceries, parks, schools, and healthcare mapped from 3693 Manzano Peak Ave",
+    hero: {
+      src: "/media/h3-grocery.jpg",
+      alt: "Grocery and retail corridor near southeast Las Vegas 89121",
+    },
+    h2: "Hyperlocal map for 89121 buyers",
+    h2Body:
+      "Filter restaurants, parks, golf, healthcare, and schools within a few miles of Manzano Peak. Drive times to the Strip and airport stay approximate until you tour at rush hour.",
+    h2Image: {
+      src: "/media/h3-park.jpg",
+      alt: "Neighborhood park and walking path near Manzano Peak Las Vegas",
+    },
+    h3Heading: "Everyday errands from Manzano Peak",
+    h3s: [grocery, park, school],
+  }),
 };
 
 export function getPageVisual(path: string): PageVisual {
