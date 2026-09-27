@@ -16,9 +16,7 @@ import {
   breadcrumbSchema,
   communityPlaceSchema,
   faqSchema,
-  localBusinessSchema,
   nearbyPlacesItemListSchema,
-  personSchema,
   webPageSchema,
 } from "@/lib/schema";
 import { SITE } from "@/lib/site";
@@ -222,8 +220,8 @@ export default function NearbyAmenitiesPage() {
       <CtaBand
         title="Tour Manzano Peak with a hyperlocal guide"
         body={`Ask about groceries, schools, and commute times from ${SITE.address.street}.`}
-        secondaryHref="/nearby-amenities"
-        secondaryLabel="Refresh this map"
+        secondaryHref="/homes-for-sale"
+        secondaryLabel="Search listings"
       />
     </>
   );
