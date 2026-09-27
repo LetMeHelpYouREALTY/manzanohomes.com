@@ -6,7 +6,6 @@ export const COMMUNITY_MAP_CENTER = {
   longitude: -115.09437,
   label: "Manzano Peak",
   addressLine: `${SITE.address.street}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}`,
-  /** Documented in PR: KB Home / USAHouses community pin for 3693 Manzano Peak Ave. */
   coordinateSource:
     "Community sales office at 3693 Manzano Peak Ave (Vales at Manzano); public index pin 36.14074, -115.09437",
 } as const;
@@ -32,7 +31,6 @@ export type AmenityCategory = {
   ariaLabel: string;
 };
 
-/** Family suburban community — groceries, parks, and schools first (not 55+ or high-rise). */
 export const AMENITY_CATEGORIES: AmenityCategory[] = [
   {
     id: "grocery",
@@ -104,6 +102,8 @@ export const AMENITY_CATEGORIES: AmenityCategory[] = [
 
 export type CuratedPlace = {
   name: string;
+  /** Official business, agency, or government page used to verify the listing. */
+  sourceUrl: string;
   schemaType:
     | "Place"
     | "Restaurant"
@@ -113,7 +113,7 @@ export type CuratedPlace = {
     | "School"
     | "Store"
     | "Pharmacy";
-  streetAddress: string;
+  streetAddress?: string;
   locality: string;
   region: string;
   postalCode: string;
@@ -124,62 +124,50 @@ export type CuratedPlace = {
 /** Verified anchors for fallback map list and ItemList schema (no invented ratings or distances). */
 export const CURATED_NEARBY_PLACES: CuratedPlace[] = [
   {
-    name: "Manzano Park",
+    name: "Harmony Park",
+    sourceUrl: "https://parkslocator.clarkcountynv.gov/Search/ParkDetail?parkId=100",
     schemaType: "Park",
-    streetAddress: "Manzano Peak Ave",
+    streetAddress: "4530 S Pearl St",
     locality: "Las Vegas",
     region: "NV",
     postalCode: "89121",
     categories: ["parks"],
-    note: "Neighborhood pocket park beside Manzano Peak streets.",
-  },
-  {
-    name: "Manzano Elementary School",
-    schemaType: "School",
-    streetAddress: "4350 E Russell Rd",
-    locality: "Las Vegas",
-    region: "NV",
-    postalCode: "89121",
-    categories: ["schools"],
   },
   {
     name: "Sunset Park",
+    sourceUrl:
+      "https://www.clarkcountynv.gov/government/departments/parks___recreation/services/area_reservations/sunset-park-webpage",
     schemaType: "Park",
     streetAddress: "2601 E Sunset Rd",
     locality: "Las Vegas",
     region: "NV",
     postalCode: "89120",
     categories: ["parks"],
+    note: "Clark County regional park (324 acres per county site).",
   },
   {
-    name: "Coronado Park",
-    schemaType: "Park",
-    streetAddress: "928 Coronado Center Dr",
-    locality: "Henderson",
-    region: "NV",
-    postalCode: "89052",
-    categories: ["parks"],
-  },
-  {
-    name: "Vons",
+    name: "Albertsons",
+    sourceUrl: "https://local.albertsons.com/nv/las-vegas/7271-s-eastern-ave.html",
     schemaType: "Store",
-    streetAddress: "7250 S Eastern Ave",
+    streetAddress: "7271 S Eastern Ave",
     locality: "Las Vegas",
     region: "NV",
-    postalCode: "89123",
+    postalCode: "89119",
     categories: ["grocery"],
   },
   {
     name: "Target",
+    sourceUrl: "https://www.target.com/sl/las-vegas-silverado-ranch/1171",
     schemaType: "Store",
-    streetAddress: "7450 S Eastern Ave",
+    streetAddress: "9725 S Eastern Ave",
     locality: "Las Vegas",
     region: "NV",
-    postalCode: "89123",
+    postalCode: "89183",
     categories: ["grocery", "shopping"],
   },
   {
     name: "The District at Green Valley Ranch",
+    sourceUrl: "https://shopthedistrictgvr.com/contact-us/",
     schemaType: "Store",
     streetAddress: "2240 Village Walk Dr",
     locality: "Henderson",
@@ -188,7 +176,8 @@ export const CURATED_NEARBY_PLACES: CuratedPlace[] = [
     categories: ["shopping", "restaurants"],
   },
   {
-    name: "Green Valley Ranch Resort",
+    name: "Green Valley Ranch Resort Spa and Casino",
+    sourceUrl: "https://greenvalleyranch.com/",
     schemaType: "Place",
     streetAddress: "2300 Paseo Verde Pkwy",
     locality: "Henderson",
@@ -198,6 +187,7 @@ export const CURATED_NEARBY_PLACES: CuratedPlace[] = [
   },
   {
     name: "Southern Hills Hospital and Medical Center",
+    sourceUrl: "https://www.sunrisehealthinfo.com/locations/southern-hills-hospital",
     schemaType: "Hospital",
     streetAddress: "9300 W Sunset Rd",
     locality: "Las Vegas",
@@ -207,6 +197,8 @@ export const CURATED_NEARBY_PLACES: CuratedPlace[] = [
   },
   {
     name: "Dignity Health-St. Rose Dominican, San Martín Campus",
+    sourceUrl:
+      "https://www.dignityhealth.org/las-vegas/st-rose-dominican-san-martin-general-hospital",
     schemaType: "Hospital",
     streetAddress: "8280 W Warm Springs Rd",
     locality: "Las Vegas",
@@ -216,6 +208,7 @@ export const CURATED_NEARBY_PLACES: CuratedPlace[] = [
   },
   {
     name: "Las Vegas National Golf Club",
+    sourceUrl: "https://lasvegasnational.com/",
     schemaType: "GolfCourse",
     streetAddress: "1911 E Desert Inn Rd",
     locality: "Las Vegas",
@@ -225,6 +218,7 @@ export const CURATED_NEARBY_PLACES: CuratedPlace[] = [
   },
   {
     name: "Southeast Career Technical Academy",
+    sourceUrl: "https://www.secta.us/",
     schemaType: "School",
     streetAddress: "5710 Mountain Vista St",
     locality: "Las Vegas",
@@ -234,11 +228,22 @@ export const CURATED_NEARBY_PLACES: CuratedPlace[] = [
   },
   {
     name: "Green Valley High School",
+    sourceUrl: "https://greenvalleyhs.org/",
     schemaType: "School",
     streetAddress: "460 N Arroyo Grande Blvd",
     locality: "Henderson",
     region: "NV",
     postalCode: "89014",
+    categories: ["schools"],
+  },
+  {
+    name: "Coronado High School",
+    sourceUrl: "https://www.cityofhenderson.com/Home/Components/FacilityDirectory/FacilityDirectory/115/2216",
+    schemaType: "School",
+    streetAddress: "1001 Coronado Center Dr",
+    locality: "Henderson",
+    region: "NV",
+    postalCode: "89052",
     categories: ["schools"],
   },
 ];
@@ -249,7 +254,7 @@ export const AMENITIES_FAQS = [
   {
     question: "What grocery stores are near Manzano Peak?",
     answer:
-      "Vons on Eastern Ave and Target on Eastern Ave are the closest full-service grocers most Manzano Peak buyers use; confirm drive time from your lot on a weekday.",
+      "Albertsons on S Eastern Ave (Warm Springs intersection) and Target on S Eastern Ave in Silverado Ranch are common full-service options; confirm drive time from your lot on a weekday.",
   },
   {
     question: "How far is Manzano Peak from the Las Vegas Strip?",
@@ -262,14 +267,14 @@ export const AMENITIES_FAQS = [
       "Southern Hills Hospital on W Sunset Rd and St. Rose Dominican San Martín Campus on W Warm Springs Rd serve southeast Las Vegas and Henderson.",
   },
   {
-    question: "Which parks are walkable from Manzano Peak?",
+    question: "Which parks are close to Manzano Peak?",
     answer:
-      "Manzano Park sits inside the Manzano Peak pocket; Sunset Park and Coronado Park are a short drive east and south.",
+      "Harmony Park on S Pearl St is in the 89121 area; Sunset Park on E Sunset Rd is the larger Clark County regional park a short drive north.",
   },
   {
-    question: "What schools serve Manzano Peak?",
+    question: "What schools are near Manzano Peak?",
     answer:
-      "Manzano Elementary is the named CCSD elementary nearby; high school assignments vary by street — verify zoning before you write an offer.",
+      "Southeast Career Technical Academy, Green Valley High School, and Coronado High School are named CCSD campuses within a few miles — verify zoning for the exact lot you tour.",
   },
   {
     question: "How long is the drive to Harry Reid International Airport?",
@@ -284,7 +289,7 @@ export const AMENITIES_FAQS = [
   {
     question: "Is there golf near Manzano Peak?",
     answer:
-      "Las Vegas National Golf Club is one of the closest 18-hole public courses northeast of the Strip (drive time varies with traffic).",
+      "Las Vegas National Golf Club on E Desert Inn Rd is a public 18-hole course KB Home lists for Vales at Manzano buyers (drive time varies with traffic).",
   },
 ] as const;
 
@@ -301,5 +306,8 @@ export function directionsUrl(query: string): string {
 }
 
 export function formatPlaceAddress(place: CuratedPlace): string {
-  return `${place.streetAddress}, ${place.locality}, ${place.region} ${place.postalCode}`;
+  if (place.streetAddress) {
+    return `${place.streetAddress}, ${place.locality}, ${place.region} ${place.postalCode}`;
+  }
+  return `${place.locality}, ${place.region} ${place.postalCode}`;
 }

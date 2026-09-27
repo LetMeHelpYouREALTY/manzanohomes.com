@@ -12,7 +12,8 @@ import {
   googleMapsEmbedUrl,
   type AmenityCategoryId,
 } from "@/lib/content/amenities";
-import { loadGoogleMaps } from "@/lib/load-google-maps";
+import { loadGoogleMaps, mapsAuthFailed } from "@/lib/load-google-maps";
+import { searchCategory } from "@/lib/places-search";
 import { cn } from "@/lib/utils";
 
 type AmenityMapProps = {
@@ -26,12 +27,55 @@ type PlaceResult = {
   id: string;
   name: string;
   address: string;
-  rating?: number;
   lat: number;
   lng: number;
+  mapsUri?: string;
 };
 
 const MAP_HEIGHT_CLASS = "min-h-[420px] h-[min(70vh,520px)] w-full";
+
+function placeDisplayName(rawName: google.maps.places.Place["displayName"]): string {
+  if (typeof rawName === "string") return rawName;
+  if (rawName && typeof rawName === "object" && "text" in rawName) {
+    return String((rawName as { text: string }).text);
+  }
+  return "Place";
+}
+
+function openInfoWindowDom(
+  infoWindow: google.maps.InfoWindow,
+  map: google.maps.Map,
+  position: google.maps.LatLngLiteral,
+  options: { title: string; lines: string[]; directionsHref?: string },
+) {
+  const container = document.createElement("div");
+  container.style.maxWidth = "260px";
+
+  const titleEl = document.createElement("strong");
+  titleEl.textContent = options.title;
+  container.appendChild(titleEl);
+
+  options.lines.forEach((line) => {
+    container.appendChild(document.createElement("br"));
+    const span = document.createElement("span");
+    span.textContent = line;
+    container.appendChild(span);
+  });
+
+  if (options.directionsHref) {
+    container.appendChild(document.createElement("br"));
+    const link = document.createElement("a");
+    link.href = options.directionsHref;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Directions";
+    container.appendChild(link);
+  }
+
+  infoWindow.setContent(container);
+  infoWindow.setPosition(position);
+  infoWindow.open({ map });
+}
 
 export default function AmenityMap({
   variant = "full",
@@ -48,6 +92,7 @@ export default function AmenityMap({
   const [mode, setMode] = useState<"idle" | "loading" | "interactive" | "fallback">("idle");
   const [loadError, setLoadError] = useState(false);
   const [livePlaces, setLivePlaces] = useState<PlaceResult[]>([]);
+  const [searchFailed, setSearchFailed] = useState(false);
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY?.trim();
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID?.trim();
@@ -69,15 +114,29 @@ export default function AmenityMap({
     placeMarkersRef.current = [];
   }, []);
 
-  const openInfo = useCallback((content: string, position: google.maps.LatLngLiteral) => {
-    if (!mapRef.current) return;
-    if (!infoWindowRef.current) {
-      infoWindowRef.current = new google.maps.InfoWindow();
-    }
-    infoWindowRef.current.setContent(content);
-    infoWindowRef.current.setPosition(position);
-    infoWindowRef.current.open({ map: mapRef.current });
-  }, []);
+  const enterFallback = useCallback(() => {
+    clearPlaceMarkers();
+    communityMarkerRef.current?.setMap(null);
+    communityMarkerRef.current = null;
+    mapRef.current = null;
+    setLivePlaces([]);
+    setLoadError(true);
+    setMode("fallback");
+  }, [clearPlaceMarkers]);
+
+  const openInfo = useCallback(
+    (
+      position: google.maps.LatLngLiteral,
+      options: { title: string; lines: string[]; directionsHref?: string },
+    ) => {
+      if (!mapRef.current) return;
+      if (!infoWindowRef.current) {
+        infoWindowRef.current = new google.maps.InfoWindow();
+      }
+      openInfoWindowDom(infoWindowRef.current, mapRef.current, position, options);
+    },
+    [],
+  );
 
   const renderCommunityMarker = useCallback(() => {
     if (!mapRef.current) return;
@@ -97,10 +156,10 @@ export default function AmenityMap({
       },
     });
     communityMarkerRef.current.addListener("click", () => {
-      openInfo(
-        `<div style="max-width:240px"><strong>${COMMUNITY_MAP_CENTER.label}</strong><br/>${COMMUNITY_MAP_CENTER.addressLine}</div>`,
-        center,
-      );
+      openInfo(center, {
+        title: COMMUNITY_MAP_CENTER.label,
+        lines: [COMMUNITY_MAP_CENTER.addressLine],
+      });
     });
   }, [center, openInfo]);
 
@@ -114,13 +173,15 @@ export default function AmenityMap({
           position: { lat: place.lat, lng: place.lng },
           title: place.name,
         });
-        const ratingLine =
-          place.rating !== undefined ? `<br/>Rating: ${place.rating.toFixed(1)}` : "";
-        const directions = directionsUrl(`${place.lat},${place.lng}`);
+        const directions = place.mapsUri ?? directionsUrl(`${place.lat},${place.lng}`);
         marker.addListener("click", () => {
           openInfo(
-            `<div style="max-width:260px"><strong>${place.name}</strong>${ratingLine}<br/>${place.address}<br/><a href="${directions}" target="_blank" rel="noopener noreferrer">Directions</a></div>`,
             { lat: place.lat, lng: place.lng },
+            {
+              title: place.name,
+              lines: place.address ? [place.address] : [],
+              directionsHref: directions,
+            },
           );
         });
         placeMarkersRef.current.push(marker);
@@ -129,53 +190,30 @@ export default function AmenityMap({
     [clearPlaceMarkers, openInfo],
   );
 
-  const searchNearby = useCallback(
+  const runCategorySearch = useCallback(
     async (categoryId: AmenityCategoryId) => {
       if (!mapRef.current) return;
       const category = AMENITY_CATEGORIES.find((item) => item.id === categoryId);
       if (!category) return;
 
+      setSearchFailed(false);
+
       try {
-        const placesLibrary = (await google.maps.importLibrary(
-          "places",
-        )) as google.maps.PlacesLibrary;
-        const { Place } = placesLibrary;
-        const primaryType = category.placeTypes[0];
-        const { places } = await Place.searchNearby({
-          fields: [
-            "displayName",
-            "formattedAddress",
-            "location",
-            "rating",
-            "googleMapsURI",
-          ],
-          locationRestriction: {
-            center,
-            radius: 8000,
-          },
-          includedPrimaryTypes: [primaryType],
-          maxResultCount: 15,
-          rankPreference: google.maps.places.SearchNearbyRankPreference.POPULARITY,
-        });
+        const places = await searchCategory(center, categoryId, category.placeTypes);
 
         const mapped: PlaceResult[] = [];
         places.forEach((place, index) => {
           const loc = place.location;
           if (!loc) return;
-          const rawName = place.displayName;
-          const name =
-            typeof rawName === "string"
-              ? rawName
-              : rawName && typeof rawName === "object" && "text" in rawName
-                ? String((rawName as { text: string }).text)
-                : "Place";
+          const name = placeDisplayName(place.displayName);
+          const json = loc.toJSON?.() ?? { lat: loc.lat(), lng: loc.lng() };
           mapped.push({
             id: `${categoryId}-${index}-${name}`,
             name,
             address: place.formattedAddress ?? "",
-            rating: place.rating ?? undefined,
-            lat: loc.lat(),
-            lng: loc.lng(),
+            lat: json.lat,
+            lng: json.lng,
+            mapsUri: place.googleMapsURI ?? undefined,
           });
         });
 
@@ -192,15 +230,26 @@ export default function AmenityMap({
           mapRef.current.setZoom(14);
         }
       } catch {
-        setLoadError(true);
-        setMode("fallback");
+        setSearchFailed(true);
+        setLivePlaces([]);
+        clearPlaceMarkers();
+        mapRef.current.setCenter(center);
+        mapRef.current.setZoom(14);
       }
     },
-    [center, plotPlaceMarkers],
+    [center, clearPlaceMarkers, plotPlaceMarkers],
   );
 
   useEffect(() => {
-    if (!apiKey) {
+    const onAuthFailure = () => {
+      enterFallback();
+    };
+    window.addEventListener("gmaps:auth-failure", onAuthFailure);
+    return () => window.removeEventListener("gmaps:auth-failure", onAuthFailure);
+  }, [enterFallback]);
+
+  useEffect(() => {
+    if (!apiKey || mapsAuthFailed) {
       setMode("fallback");
       return;
     }
@@ -208,9 +257,13 @@ export default function AmenityMap({
     let cancelled = false;
     setMode("loading");
 
-    void loadGoogleMaps(apiKey, mapId)
+    void loadGoogleMaps(apiKey)
       .then(async () => {
-        if (cancelled || !mapHostRef.current) return;
+        if (cancelled || mapsAuthFailed) {
+          if (!cancelled) enterFallback();
+          return;
+        }
+        if (!mapHostRef.current) return;
         const { Map } = (await google.maps.importLibrary("maps")) as google.maps.MapsLibrary;
         mapRef.current = new Map(mapHostRef.current, {
           center,
@@ -222,13 +275,10 @@ export default function AmenityMap({
         });
         renderCommunityMarker();
         setMode("interactive");
-        await searchNearby(activeCategory);
+        await runCategorySearch(activeCategory);
       })
       .catch(() => {
-        if (!cancelled) {
-          setLoadError(true);
-          setMode("fallback");
-        }
+        if (!cancelled) enterFallback();
       });
 
     return () => {
@@ -242,11 +292,14 @@ export default function AmenityMap({
 
   useEffect(() => {
     if (mode === "interactive") {
-      void searchNearby(activeCategory);
+      void runCategorySearch(activeCategory);
     }
-  }, [activeCategory, mode, searchNearby]);
+  }, [activeCategory, mode, runCategorySearch]);
 
   const embedSrc = googleMapsEmbedUrl(center.lat, center.lng);
+
+  const showLiveList =
+    mode === "interactive" && livePlaces.length > 0 && !searchFailed;
 
   return (
     <div className={cn("space-y-6", className)}>
@@ -297,7 +350,7 @@ export default function AmenityMap({
           <iframe
             title={`Map of ${COMMUNITY_MAP_CENTER.label} Las Vegas`}
             src={embedSrc}
-            className="h-full w-full border-0"
+            className={MAP_HEIGHT_CLASS}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
@@ -311,24 +364,18 @@ export default function AmenityMap({
         ) : null}
       </div>
 
-      {loadError && mode === "fallback" && apiKey ? (
+      {loadError && mode === "fallback" ? (
         <p className="text-sm text-amber-800" role="status">
           Live Places search is unavailable; showing the embedded map and curated list below.
-        </p>
-      ) : null}
-
-      {!apiKey ? (
-        <p className="text-sm text-slate-600" role="status">
-          Add <code className="text-xs">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code> in Vercel for
-          interactive markers; the embedded map and list work without a key.
         </p>
       ) : null}
 
       {showCuratedList ? (
         <CuratedList
           categoryId={activeCategory}
-          places={mode === "interactive" && livePlaces.length > 0 ? livePlaces : null}
+          places={showLiveList ? livePlaces : null}
           curated={curated}
+          searchFailed={searchFailed}
         />
       ) : null}
 
@@ -350,10 +397,12 @@ function CuratedList({
   categoryId,
   places,
   curated,
+  searchFailed,
 }: {
   categoryId: AmenityCategoryId;
   places: PlaceResult[] | null;
   curated: ReturnType<typeof curatedPlacesForCategory>;
+  searchFailed: boolean;
 }) {
   const category = AMENITY_CATEGORIES.find((item) => item.id === categoryId);
 
@@ -370,13 +419,10 @@ function CuratedList({
               className="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-700"
             >
               <p className="font-semibold text-slate-900">{place.name}</p>
-              {place.rating !== undefined ? (
-                <p className="text-slate-600">Google rating: {place.rating.toFixed(1)}</p>
-              ) : null}
-              <p>{place.address}</p>
+              {place.address ? <p>{place.address}</p> : null}
               <a
                 className="mt-2 inline-block font-medium text-primary-700 hover:underline"
-                href={directionsUrl(`${place.lat},${place.lng}`)}
+                href={place.mapsUri ?? directionsUrl(`${place.lat},${place.lng}`)}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -394,6 +440,11 @@ function CuratedList({
       <h3 className="text-lg font-semibold text-slate-900">
         Featured {category?.label?.toLowerCase() ?? "places"} near Manzano Peak
       </h3>
+      {searchFailed ? (
+        <p className="mt-2 text-sm text-slate-600" role="status">
+          Live results are unavailable for this category; showing verified nearby places.
+        </p>
+      ) : null}
       <ul className="mt-4 grid gap-3 sm:grid-cols-2">
         {curated.map((place) => (
           <li

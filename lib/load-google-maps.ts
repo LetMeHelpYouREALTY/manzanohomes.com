@@ -1,60 +1,31 @@
-const GOOGLE_MAPS_BASE = "https://maps.googleapis.com/maps/api/js";
+let mapsReady: Promise<void> | null = null;
 
-let mapsPromise: Promise<void> | null = null;
-let mapsKeyUsed: string | null = null;
-
-function buildSrc(apiKey: string, mapId?: string) {
-  const params = new URLSearchParams({
-    key: apiKey,
-    v: "weekly",
-    loading: "async",
-    libraries: "places,marker",
-  });
-  if (mapId) {
-    params.set("map_ids", mapId);
-  }
-  return `${GOOGLE_MAPS_BASE}?${params.toString()}`;
-}
-
-function injectGoogleMapsScript(src: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(`script[src^="${GOOGLE_MAPS_BASE}"]`);
-    if (existing) {
-      if (existing.getAttribute("data-loaded") === "true" || window.google?.maps) {
-        resolve();
-        return;
-      }
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener(
-        "error",
-        () => reject(new Error("Google Maps script failed to load")),
-        { once: true },
-      );
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = src;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      script.setAttribute("data-loaded", "true");
-      resolve();
+export function loadGoogleMaps(apiKey: string): Promise<void> {
+  if (typeof window === "undefined") return Promise.reject(new Error("ssr"));
+  if (typeof window.google?.maps?.importLibrary === "function") return Promise.resolve();
+  if (mapsReady) return mapsReady;
+  mapsReady = new Promise<void>((resolve, reject) => {
+    const cb = "__gmapsReady";
+    (window as unknown as Record<string, unknown>)[cb] = () => resolve();
+    (window as unknown as { gm_authFailure?: () => void }).gm_authFailure = () => {
+      window.dispatchEvent(new Event("gmaps:auth-failure"));
+      reject(new Error("gm_authFailure"));
     };
-    script.onerror = () => reject(new Error("Google Maps script failed to load"));
-    document.head.appendChild(script);
+    const s = document.createElement("script");
+    s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&v=weekly&loading=async&callback=${cb}`;
+    s.async = true;
+    s.onerror = () => {
+      mapsReady = null;
+      reject(new Error("maps script failed"));
+    };
+    document.head.appendChild(s);
   });
+  return mapsReady;
 }
 
-/** Load Maps JavaScript API once when the amenity map enters the viewport. */
-export function loadGoogleMaps(apiKey: string, mapId?: string): Promise<void> {
-  if (typeof window === "undefined") {
-    return Promise.resolve();
-  }
-  if (mapsPromise && mapsKeyUsed === apiKey) {
-    return mapsPromise;
-  }
-  mapsKeyUsed = apiKey;
-  mapsPromise = injectGoogleMapsScript(buildSrc(apiKey, mapId));
-  return mapsPromise;
+export let mapsAuthFailed = false;
+if (typeof window !== "undefined") {
+  window.addEventListener("gmaps:auth-failure", () => {
+    mapsAuthFailed = true;
+  });
 }

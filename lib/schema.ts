@@ -267,7 +267,7 @@ type EmploymentType = "FULL_TIME" | "PART_TIME";
 type SchemaPlaceItem = {
   name: string;
   schemaType: string;
-  streetAddress: string;
+  streetAddress?: string;
   locality: string;
   region: string;
   postalCode: string;
@@ -310,14 +310,18 @@ export function nearbyPlacesItemListSchema(places: SchemaPlaceItem[]): JsonLd {
       item: {
         "@type": place.schemaType,
         name: place.name,
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: place.streetAddress,
-          addressLocality: place.locality,
-          addressRegion: place.region,
-          postalCode: place.postalCode,
-          addressCountry: SITE.address.country,
-        },
+        ...(place.streetAddress
+          ? {
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: place.streetAddress,
+                addressLocality: place.locality,
+                addressRegion: place.region,
+                postalCode: place.postalCode,
+                addressCountry: SITE.address.country,
+              },
+            }
+          : {}),
       },
     })),
   };

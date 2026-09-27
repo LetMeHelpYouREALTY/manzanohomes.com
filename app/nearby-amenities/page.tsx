@@ -44,16 +44,16 @@ const writtenSections = [
     id: "parks",
     title: "Parks & recreation",
     body: [
-      "Manzano Park is the pocket park inside the Manzano Peak streets — playground, paths, and picnic space within a short walk of many lots.",
+      "Harmony Park on S Pearl St (Clark County) offers playgrounds and open turf in the 89121 area.",
       "Sunset Park (2601 E Sunset Rd) is the regional lake-and-trails park locals use for weekend walks and sports fields.",
-      "Coronado Park in Henderson adds tennis, soccer, and additional playground space south of the 215 belt.",
+      "KB Home lists a community park and dog park inside the Vales at Manzano streets — tour the model homes for the exact pocket-park location.",
     ],
   },
   {
     id: "golf",
     title: "Golf",
     body: [
-      "Las Vegas National Golf Club on E Desert Inn Rd is the named 18-hole public course northeast of the Strip that KB Home lists for Vales at Manzano buyers.",
+      "Las Vegas National Golf Club on E Desert Inn Rd is the public 18-hole course KB Home lists for Vales at Manzano buyers.",
       "Practice facilities and additional courses spread toward Henderson and the west side — drive time depends on tee time and traffic.",
     ],
   },
@@ -69,7 +69,7 @@ const writtenSections = [
     id: "shopping",
     title: "Shopping & groceries",
     body: [
-      "Vons (7250 S Eastern Ave) and Target (7450 S Eastern Ave) cover weekly groceries and household runs east of Manzano Peak.",
+      "Albertsons (7271 S Eastern Ave) and Target (9725 S Eastern Ave) cover weekly groceries and household runs east and south of Manzano Peak.",
       "The District at Green Valley Ranch and Green Valley Ranch Resort add fashion, home goods, and entertainment retail in Henderson.",
     ],
   },
@@ -77,8 +77,8 @@ const writtenSections = [
     id: "schools",
     title: "Schools",
     body: [
-      "Manzano Elementary School (4350 E Russell Rd) is the CCSD elementary campus named on Manzano Peak marketing materials.",
-      "Southeast Career Technical Academy, Green Valley High School, and Coronado High School sit within a few miles — CCSD still assigns by street, so verify zoning for the exact lot you tour.",
+      "Southeast Career Technical Academy (5710 Mountain Vista St), Green Valley High School (460 N Arroyo Grande Blvd), and Coronado High School (1001 Coronado Center Dr) are named CCSD campuses within a few miles.",
+      "CCSD still assigns by street, so verify zoning for the exact lot you tour.",
     ],
   },
   {
@@ -189,6 +189,14 @@ export default function NearbyAmenitiesPage() {
               >
                 <p className="font-semibold text-slate-900">{place.name}</p>
                 <p>{formatPlaceAddress(place)}</p>
+                <a
+                  href={place.sourceUrl}
+                  className="mt-2 inline-block text-xs font-medium text-primary-700 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Source
+                </a>
               </li>
             ))}
           </ul>

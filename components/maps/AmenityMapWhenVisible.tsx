@@ -42,8 +42,7 @@ export default function AmenityMapWhenVisible({
     if (!visible) return;
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY?.trim();
     if (!apiKey) return;
-    const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID?.trim();
-    void loadGoogleMaps(apiKey, mapId).catch(() => {
+    void loadGoogleMaps(apiKey).catch(() => {
       /* AmenityMap handles fallback UI */
     });
   }, [visible]);
