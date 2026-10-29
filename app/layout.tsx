@@ -6,7 +6,6 @@ import JsonLd from "@/components/seo/JsonLd";
 import { localBusinessSchema, personSchema, websiteSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 import "./globals.css";
-import WidgetTracker from './widget-tracker'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -37,7 +36,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main-content">{children}</main>
         <Footer />
         <CalendlyBadge />
-        <WidgetTracker />
       </body>
     </html>
   );
