@@ -6,6 +6,8 @@ import JsonLd from "@/components/seo/JsonLd";
 import { localBusinessSchema, personSchema, websiteSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 import "./globals.css";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
+import { SpeedInsights as VercelSpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -36,6 +38,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main-content">{children}</main>
         <Footer />
         <CalendlyBadge />
+        <VercelAnalytics />
+        <VercelSpeedInsights />
       </body>
     </html>
   );
