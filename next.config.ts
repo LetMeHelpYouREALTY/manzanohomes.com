@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://em.realscout.com https://www.realscout.com https://assets.calendly.com",
               "img-src 'self' data: blob: https:",
               "font-src 'self' data: https://assets.calendly.com",
-              "connect-src 'self' https://em.realscout.com https://www.realscout.com https://www.google-analytics.com https://calendly.com https://api.calendly.com https://*.calendly.com",
+              "connect-src 'self' https://em.realscout.com https://www.realscout.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://calendly.com https://api.calendly.com https://*.calendly.com",
               "frame-src 'self' https://em.realscout.com https://www.realscout.com https://www.google.com https://maps.google.com https://*.google.com https://calendly.com https://*.calendly.com",
             ].join("; "),
           },
